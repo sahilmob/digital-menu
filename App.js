@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import {
-	Dimensions
-} from "react-native";
+import { Dimensions } from "react-native";
 import { createSwitchNavigator } from "react-navigation";
 import { Root } from "native-base";
 import {
@@ -11,21 +9,22 @@ import {
 	removeOrientationListener as rol
 } from "react-native-responsive-screen";
 import { connect } from "react-redux";
-import Loading from './src/components/Loading'
-import SelectLang from './src/components/SelectLang'
-import MainEN from './src/components/MainEN'
-import Main from './src/components/Main'
-import SplashScreen from 'react-native-splash-screen'
-
-
-
+import Loading from "./src/components/Loading";
+import SelectLang from "./src/components/SelectLang";
+import MainEN from "./src/components/MainEN";
+import Main from "./src/components/Main";
+import AuthEN from "./src/components/athuEN";
+import SplashScreen from "react-native-splash-screen";
 
 const AppNavigation = createSwitchNavigator({
 	Loading: {
 		screen: Loading
 	},
+	AuthEN: {
+		screen: AuthEN
+	},
 	SelectLang: {
-		screen: SelectLang,
+		screen: SelectLang
 	},
 	MainEN: {
 		screen: MainEN
@@ -33,8 +32,7 @@ const AppNavigation = createSwitchNavigator({
 	Main: {
 		screen: Main
 	}
-
-})
+});
 
 class App extends Component {
 	constructor(props) {
@@ -87,7 +85,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
 	return {
 		orientation: state.orientation,
-		deviceHeight: state.deviceHeight,
+		deviceHeight: state.deviceHeight
 	};
 };
 

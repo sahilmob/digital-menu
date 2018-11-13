@@ -15,7 +15,10 @@ const initialState = {
 	deviceWidth: 0,
 	deviceHeight: 0,
 	productsPerPage: 12,
-	selectedLanguage: null
+	selectedLanguage: null,
+	url: null,
+	id: null,
+	password: null
 };
 import update from "immutability-helper";
 
@@ -25,7 +28,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				selectedLanguage: action.lang
-			}
+			};
 		}
 		case "GET_PRODUCTS_BY_CAT_ID":
 			let categoryProducts = [];
