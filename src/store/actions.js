@@ -1,4 +1,10 @@
 import axios from "axios";
+export const setResturantData = resturantData => {
+	return {
+		type: "SET_RESTURANT_DATA",
+		resturantData
+	};
+};
 export const saveProduncts = products => {
 	return {
 		type: "STORE_PRODUCTS",
@@ -54,7 +60,31 @@ export const onHideErrorAlert = () => {
 	};
 };
 
-export const fetchProducts = () => {
+export const fetchResturants = () => {
+	return (dispatch, getState) => {
+		axios({
+			method: "get",
+			baseURL: "https://almenu.net/wp-json/wp/v2/res",
+			params: {
+				bclid: "IwAR159Z8l0c03zzstmX3kvysZx7LkiR_eMaL3KwegDVvogOmaIZmLW75a4Wg"
+			}
+		})
+			.then(({ data }) => {
+				const resturantData = data.find(({ slug }) => {
+					return slug === getState().restId;
+				});
+				if (!resturantData) {
+					return dispatch(onShowErrorAlert("Resturant data are invlaid"));
+				}
+				return dispatch(setResturantData(resturantData));
+			})
+			.catch(err => {
+				dispatch(onShowErrorAlert(err));
+			});
+	};
+};
+
+export const fetchProducts = (url, id, pass) => {
 	return (dispatch, getState) => {
 		const { products, categories } = getState();
 		if (products.length > 0) {
@@ -64,19 +94,20 @@ export const fetchProducts = () => {
 				axios({
 					method: "get",
 					// baseURL: "https://lemoulinbakery.com.sa/wp-json/wc/v2",
-					baseURL: "https://lemol.sheraaholding.sa/wp-json/wc/v2",
+					baseURL: `${url}wp-json/wc/v2`,
 					url: `/products`,
 					auth: {
-						username: "ck_78bbb572b458e6b9d9993eb5864a8268c7221e1c",
-						password: "cs_f4abfebe27b3232933d9367cef57c147fc2d86cd"
+						username: id,
+						password: pass
 					},
 					params: {
 						category: cat.id,
 						per_page: 100
 					}
 				})
-					.then(res => {
-						dispatch(saveProduncts(res.data));
+					.then(({ data }) => {
+						dispatch(saveProduncts(data));
+						console.log(data);
 					})
 					.catch(err => {
 						dispatch(setLoadingFalse());
@@ -131,25 +162,27 @@ export const fetchProducts = () => {
 // 	};
 // };
 
-export const getCategories = () => {
+export const getCategories = (url, id, pass) => {
 	return dispatch => {
 		dispatch(setLoadingTrue());
 		axios({
 			method: "get",
 			// baseURL: "https://lemoulinbakery.com.sa/wp-json/wc/v2",
-			baseURL: "https://lemol.sheraaholding.sa/wp-json/wc/v2",
+			// baseURL: "https://lemol.sheraaholding.sa/wp-json/wc/v2",
+			baseURL: `${url}wp-json/wc/v2`,
 			url: "/products/categories",
 			params: { per_page: 100 },
 			auth: {
-				username: "ck_78bbb572b458e6b9d9993eb5864a8268c7221e1c",
-				password: "cs_f4abfebe27b3232933d9367cef57c147fc2d86cd"
+				username: id,
+				password: pass
 			}
 		})
-			.then(res => {
-				dispatch(saveCategories(res.data));
+			.then(({ data }) => {
+				console.log(data);
+				dispatch(saveCategories(data));
 				dispatch(setLoadingFalse());
 				dispatch(clearProducts());
-				dispatch(fetchProducts());
+				dispatch(fetchProducts(url, id, pass));
 			})
 			.catch(err => {
 				dispatch(setLoadingFalse());
@@ -206,11 +239,16 @@ export const refreshCategories = () => {
 
 export const checkStore = () => {
 	return (dispatch, getState) => {
-		const { categories } = getState();
+		const {
+			categories,
+			resturantData: {
+				acf: { url, Id, pass }
+			}
+		} = getState();
 		if (categories.length > 0) {
-			dispatch(fetchProducts());
+			dispatch(fetchProducts(url, Id, pass));
 		} else {
-			dispatch(getCategories());
+			dispatch(getCategories(url, Id, pass));
 		}
 	};
 };

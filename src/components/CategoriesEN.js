@@ -31,8 +31,6 @@ import GridView from "react-native-super-grid";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { scale, moderateScale } from "react-native-size-matters";
 
-
-
 class Categories extends Component {
 	static navigationOptions = {
 		drawerIcon: ({ tintColor }) => (
@@ -79,19 +77,23 @@ class Categories extends Component {
 									? moderateScale(170, 0.6)
 									: moderateScale(150, 0.7)
 								: deviceWidth > 400
-									? moderateScale(160, 0.6)
-									: moderateScale(160, 0.7),
+								? moderateScale(160, 0.6)
+								: moderateScale(160, 0.7),
 						marginBottom: scale(15)
 					}}
 					items={categories}
 					renderItem={item => (
 						<TouchableOpacity
 							onPress={() => {
-								onNavigateToProducts(navigate, item.id, selectedLanguage === "en" ? item.description : item.name);
+								onNavigateToProducts(
+									navigate,
+									item.id,
+									selectedLanguage === "en" ? item.description : item.name
+								);
 							}}
 						>
 							<Card transparent>
-								<CardItem>
+								{/* <CardItem>
 									<Body style={styles.cardItemBody}>
 										<CachedImage
 											style={styles.cardItemImage}
@@ -101,7 +103,7 @@ class Categories extends Component {
 											}
 										/>
 									</Body>
-								</CardItem>
+								</CardItem> */}
 								<CardItem style={styles.catNameCardItem}>
 									<Text style={styles.catName}>{item.description}</Text>
 								</CardItem>

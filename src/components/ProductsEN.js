@@ -53,8 +53,8 @@ class Products extends Component {
 	};
 
 	navigateToProducts = (navigate, id, name) => {
-		this.props.onNavigateToProducts(navigate, id, name)
-	}
+		this.props.onNavigateToProducts(navigate, id, name);
+	};
 
 	toggleCategoriesList = () => {
 		this.setState({
@@ -76,16 +76,20 @@ class Products extends Component {
 					<TouchableOpacity>
 						<ListItem
 							onPress={() => {
-								this.setState({ showCategoriesList: false, currentPage: 1, pageLowerLimit: 0 });
+								this.setState({
+									showCategoriesList: false,
+									currentPage: 1,
+									pageLowerLimit: 0
+								});
 								this.navigateToProducts(
 									navigation.navigate,
 									category.id,
 									category.slug
 								);
-								this.scrollToTop()
+								this.scrollToTop();
 							}}
 						>
-							<Left style={styles.catListListItemLeft}>
+							{/* <Left style={styles.catListListItemLeft}>
 								<CachedImage
 									style={styles.catListProductImg}
 									source={{ uri: category.image.src }}
@@ -94,7 +98,7 @@ class Products extends Component {
 									}
 								/>
 								<Text style={styles.catListListItemText}>{category.slug}</Text>
-							</Left>
+							</Left> */}
 							<Right>
 								<FontAwesome
 									theme={{ iconFamily: "FontAwesome5" }}
@@ -108,8 +112,6 @@ class Products extends Component {
 		);
 	};
 
-
-
 	renderContent = () => {
 		const {
 			categoryProducts,
@@ -120,7 +122,7 @@ class Products extends Component {
 			onAddToCart,
 			loading
 		} = this.props;
-		const regex = /(<([^>]+)>)/ig
+		const regex = /(<([^>]+)>)/gi;
 
 		const { pageLowerLimit, showCategoriesList } = this.state;
 
@@ -150,11 +152,11 @@ class Products extends Component {
 									? deviceWidth > 400
 										? moderateScale(290, 0.7)
 										: deviceWidth < 300
-											? moderateScale(300, 0.7)
-											: moderateScale(280, 0.7)
+										? moderateScale(300, 0.7)
+										: moderateScale(280, 0.7)
 									: deviceWidth > 400
-										? moderateScale(280, 0.6)
-										: moderateScale(350, 0.7),
+									? moderateScale(280, 0.6)
+									: moderateScale(350, 0.7),
 							marginBottom: scale(15)
 						}}
 						renderItem={item => (
@@ -169,7 +171,9 @@ class Products extends Component {
 									/>
 								</CardItem>
 								<CardItem>
-									<Text style={styles.productName}>{item.short_description.replace(regex, "")}</Text>
+									<Text style={styles.productName}>
+										{item.short_description.replace(regex, "")}
+									</Text>
 								</CardItem>
 								{item.dimensions.height ? (
 									<CardItem style={styles.caloriesCardItem}>
@@ -207,7 +211,10 @@ class Products extends Component {
 						)}
 					/>
 					{this.renderPagination()}
-					<Text style={styles.noteText}>Nutritnets daily value are based on 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.</Text>
+					<Text style={styles.noteText}>
+						Nutritnets daily value are based on 2,000 calorie diet. Your daily
+						values may be higher or lower depending on your calorie needs.
+					</Text>
 				</ScrollView>
 			);
 		} else {
@@ -483,7 +490,7 @@ const styles = StyleSheet.create({
 	noteText: {
 		paddingHorizontal: scale(10),
 		paddingBottom: scale(10),
-		textAlign: 'center'
+		textAlign: "center"
 	}
 });
 

@@ -3,32 +3,77 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { Button, Form, Item, Input } from "native-base";
 import { scale } from "react-native-size-matters";
 import { connect } from "react-redux";
+import AwesomeAlert from "react-native-awesome-alerts";
+
+import { fetchResturants } from "../store/actions";
 
 class Main extends Component {
-	handleClick = lang => {
-		this.props.onSetLanguage(lang);
-		if (lang === "en") {
-			this.props.navigation.navigate("MainEN");
-		} else if (lang === "ar") {
-			this.props.navigation.navigate("Main");
-		}
+	state = {
+		restId: null
 	};
+	handleClick = () => {
+		this.props.onSetRestCredentials(this.state.restId);
+	};
+
+	handleChange = id => {
+		this.setState({
+			restId: id
+		});
+	};
+
+	componentDidUpdate(prevProps) {
+		const { restId, onFetchResturants, resturantData } = this.props;
+		if (prevProps.restId !== restId) {
+			onFetchResturants();
+		}
+
+		if (resturantData && prevProps.resturantData !== resturantData) {
+			this.props.navigation.navigate("MainEN");
+		}
+	}
 
 	render() {
 		const { handleClick } = this;
+		const { showErrorAlert, errMsg, onHideErrorMessage } = this.props;
 		return (
 			<View style={styles.outer}>
 				<Form>
 					<Item>
-						<Input placeholder="Doamin" />
+						<Input
+							placeholder="Restaurant ID"
+							onChangeText={id => this.handleChange(id)}
+						/>
 					</Item>
-					<Item last>
+					{/* <Item last>
 						<Input placeholder="ID" />
 					</Item>
 					<Item last>
 						<Input placeholder="Password" />
-					</Item>
+					</Item> */}
+					<Button
+						style={styles.btn}
+						onPress={() => {
+							handleClick();
+						}}
+					>
+						<Text style={styles.btnText}>Submit</Text>
+					</Button>
 				</Form>
+				<AwesomeAlert
+					show={showErrorAlert}
+					showProgress={false}
+					title="Alert"
+					message={errMsg}
+					closeOnTouchOutside={true}
+					closeOnHardwareBackPress={false}
+					showCancelButton={true}
+					showConfirmButton={false}
+					cancelText="Dismiss"
+					cancelButtonColor="red"
+					onCancelPressed={() => {
+						onHideErrorMessage();
+					}}
+				/>
 			</View>
 		);
 	}
@@ -68,11 +113,20 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onSetLanguage: lang => {
 			dispatch({ type: "SET_LANGUAGE", lang });
-		}
+		},
+		onSetRestCredentials: restId => {
+			dispatch({ type: "SET_REST_CREDNTIALS", restId });
+		},
+		onFetchResturants: () => dispatch(fetchResturants()),
+		onHideErrorMessage: () => dispatch({ type: "HIDE_ERROR_ALERT" })
 	};
 };
 
+const mapStateToProps = state => {
+	return ({ restId, showErrorAlert, errMsg, resturantData } = state);
+};
+
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
 )(Main);

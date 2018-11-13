@@ -16,9 +16,10 @@ const initialState = {
 	deviceHeight: 0,
 	productsPerPage: 12,
 	selectedLanguage: null,
-	url: null,
+	restId: null,
 	id: null,
-	password: null
+	password: null,
+	resturantData: null
 };
 import update from "immutability-helper";
 
@@ -28,6 +29,18 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				selectedLanguage: action.lang
+			};
+		}
+		case "SET_REST_CREDNTIALS": {
+			return {
+				...state,
+				restId: action.restId
+			};
+		}
+		case "SET_RESTURANT_DATA": {
+			return {
+				...state,
+				resturantData: action.resturantData
 			};
 		}
 		case "GET_PRODUCTS_BY_CAT_ID":
