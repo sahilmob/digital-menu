@@ -93,17 +93,19 @@ class Categories extends Component {
 							}}
 						>
 							<Card transparent>
-								{/* <CardItem>
-									<Body style={styles.cardItemBody}>
-										<CachedImage
-											style={styles.cardItemImage}
-											source={{ uri: item.image.src }}
-											activityIndicator={
-												<ActivityIndicator size="small" color="#968037" />
-											}
-										/>
-									</Body>
-								</CardItem> */}
+								{item.image ? (
+									<CardItem>
+										<Body style={styles.cardItemBody}>
+											<CachedImage
+												style={styles.cardItemImage}
+												source={{ uri: item.image.src }}
+												activityIndicator={
+													<ActivityIndicator size="small" color="#968037" />
+												}
+											/>
+										</Body>
+									</CardItem>
+								) : null}
 								<CardItem style={styles.catNameCardItem}>
 									<Text style={styles.catName}>{item.description}</Text>
 								</CardItem>

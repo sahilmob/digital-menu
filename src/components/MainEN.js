@@ -18,10 +18,15 @@ import Categories from "./CategoriesEN";
 import Wishlist from "./WishlistEN";
 import Products from "./ProductsEN";
 import Settings from "./SettingsEN";
-import logo from "../components/assets/img/logo.png";
 
-Main = prop => {
-	const CustomDrawerComponent = props => {
+Main = props => {
+	const {
+		onSetLanguage,
+		resturantData: {
+			acf: { color, logo }
+		}
+	} = props;
+	const CustomDrawerComponent = drawerProps => {
 		let orientation = null;
 		let { width, height } = Dimensions.get("window");
 		if (width > height) {
@@ -39,15 +44,15 @@ Main = prop => {
 				>
 					<View style={{ alignItems: "center", marginBottom: scale(10) }}>
 						<Image
-							source={logo}
+							source={{ uri: logo }}
 							style={{ height: scale(50), width: scale(50) }}
 						/>
 					</View>
-					<DrawerItems {...props} />
+					<DrawerItems {...drawerProps} />
 					<TouchableOpacity
 						style={{ flexDirection: "row" }}
 						onPress={() => {
-							prop.onSetLanguage();
+							onSetLanguage();
 							setTimeout(RNRestart.Restart, 1);
 						}}
 					>
@@ -55,7 +60,7 @@ Main = prop => {
 							theme={{ iconFamily: "FontAwesome" }}
 							name="language"
 							style={{
-								color: props.activeTintColor,
+								color: drawerProps.activeTintColor,
 								fontSize: scale(16),
 								marginRight: scale(10),
 								marginLeft: scale(45)
@@ -86,12 +91,12 @@ Main = prop => {
 								theme={{ iconFamily: "FontAwesome" }}
 								name="cog"
 								style={{
-									color: props.activeTintColor,
+									color: drawerProps.activeTintColor,
 									fontSize: scale(16),
 									marginLeft: 25
 								}}
 								onPress={() => {
-									props.navigation.navigate("Settings");
+									drawerProps.navigation.navigate("Settings");
 								}}
 							/>
 						</TouchableOpacity>
@@ -125,7 +130,7 @@ Main = prop => {
 		{
 			contentComponent: CustomDrawerComponent,
 			contentOptions: {
-				activeTintColor: "#715C31",
+				activeTintColor: color,
 				itemStyle: {
 					flex: 1,
 					flexDirection: "row",
@@ -140,6 +145,12 @@ Main = prop => {
 	return <Navigation />;
 };
 
+const mapStateToProps = state => {
+	return {
+		resturantData: state.resturantData
+	};
+};
+
 const mapDispatchToProps = dispatch => {
 	return {
 		onSetLanguage: () => {
@@ -149,6 +160,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
 )(Main);

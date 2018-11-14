@@ -27,7 +27,7 @@ class Main extends Component {
 			onFetchResturants();
 		}
 
-		if (resturantData && prevProps.resturantData !== resturantData) {
+		if (resturantData) {
 			this.props.navigation.navigate("MainEN");
 		}
 	}
@@ -111,9 +111,6 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSetLanguage: lang => {
-			dispatch({ type: "SET_LANGUAGE", lang });
-		},
 		onSetRestCredentials: restId => {
 			dispatch({ type: "SET_REST_CREDNTIALS", restId });
 		},

@@ -6,22 +6,21 @@ class Loading extends Component {
 	componentWillMount() {
 		const {
 			selectedLanguage,
-			url,
-			id,
-			password,
+			restId,
+			categories,
 			navigation: { navigate }
 		} = this.props;
 
 		if (!selectedLanguage) {
 			navigate("SelectLang");
 		} else if (selectedLanguage === "en") {
-			if (!url || !id || !password) {
+			if (!restId || !categories) {
 				navigate("AuthEN");
 			} else {
 				navigate("MainEN");
 			}
 		} else if (selectedLanguage === "ar") {
-			if (!url || !id || !password) {
+			if (!restId || !categories) {
 				navigate("Auth");
 			} else {
 				navigate("Main");
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-	return ({ selectedLanguage, url, id, password } = state);
+	return ({ selectedLanguage, restId, categories } = state);
 };
 
 export default connect(
