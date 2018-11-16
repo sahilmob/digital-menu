@@ -15,9 +15,7 @@ import {
 	CardItem,
 	Right,
 	Button,
-	View,
-	ListItem,
-	List
+	View
 } from "native-base";
 import { connect } from "react-redux";
 import {
@@ -30,6 +28,8 @@ import CachedImage from "react-native-image-cache-wrapper";
 import { scale } from "react-native-size-matters";
 import roundTo from "round-to";
 
+import CatergoriesList from "./Shared/CategoriesListEn";
+
 class Products extends Component {
 	static navigationOptions = {
 		drawerLabel: "Favorites",
@@ -41,12 +41,12 @@ class Products extends Component {
 			/>
 		)
 	};
-	constructor(props) {
-		super(props);
-		this.state = {
-			showCategoriesList: false
-		};
-	}
+
+	state = {
+		currentPage: 1,
+		pageLowerLimit: 0,
+		showCategoriesList: false
+	};
 
 	componentDidMount() {
 		loc(this);
@@ -55,60 +55,18 @@ class Products extends Component {
 	componentWillUnmount() {
 		rol();
 	}
+	onSelectCategoryFromList = () => {
+		this.setState({
+			showCategoriesList: false,
+			currentPage: 1,
+			pageLowerLimit: 0
+		});
+	};
 
 	toggleCategoriesList = () => {
 		this.setState({
 			showCategoriesList: !this.state.showCategoriesList
 		});
-	};
-
-	navigateToProducts = (navigate, id, name) => {
-		this.props.onNavigateToProducts(navigate, id, name)
-	}
-
-	renderCategoriesList = () => {
-		const { categories, navigation } = this.props;
-		const { showCategoriesList } = this.state;
-		return (
-			<List
-				style={{
-					display: showCategoriesList ? "flex" : "none",
-					backgroundColor: "white"
-				}}
-				dataArray={categories}
-				renderRow={category => (
-					<TouchableOpacity>
-						<ListItem
-							onPress={() => {
-								this.setState({ showCategoriesList: false, currentPage: 1 });
-								this.navigateToProducts(
-									navigation.navigate,
-									category.id,
-									category.slug
-								)
-							}}
-						>
-							<Left style={styles.catListListItemLeft}>
-								<CachedImage
-									style={styles.catListProductImg}
-									source={{ uri: category.image.src }}
-									activityIndicator={
-										<ActivityIndicator size="small" color="#968037" />
-									}
-								/>
-								<Text style={styles.catListListItemText}>{category.slug}</Text>
-							</Left>
-							<Right>
-								<FontAwesome
-									theme={{ iconFamily: "FontAwesome5" }}
-									name="arrow-right"
-								/>
-							</Right>
-						</ListItem>
-					</TouchableOpacity>
-				)}
-			/>
-		);
 	};
 
 	renderContent = () => {
@@ -120,7 +78,7 @@ class Products extends Component {
 			totalPrice,
 			onEmptyCart
 		} = this.props;
-		const regex = /(<([^>]+)>)/ig
+		const regex = /(<([^>]+)>)/gi;
 		const { showCategoriesList } = this.state;
 		if (cart.length) {
 			let cartArr = [];
@@ -131,8 +89,7 @@ class Products extends Component {
 							<Left style={styles.productCardItemLeft}>
 								<Text
 									style={{
-										fontSize:
-											orientation === "portrate" ? scale(12) : scale(14)
+										fontSize: orientation === "portrate" ? scale(12) : scale(14)
 									}}
 								>
 									{el.itemObj.short_description.replace(regex, "")}
@@ -157,22 +114,20 @@ class Products extends Component {
 									}
 								/>
 							</Right>
-
 						</CardItem>
 						<CardItem style={styles.productPriceCardItem}>
-
 							<View
 								style={{ flexDirection: "row", justifyContent: "flex-end" }}
 							>
-
 								<View style={styles.quantityCotrolsContainer}>
 									<Text
 										style={{
-											fontSize: orientation === "portrate" ? scale(12) : scale(14)
+											fontSize:
+												orientation === "portrate" ? scale(12) : scale(14)
 										}}
 									>
 										Quantity:
-								</Text>
+									</Text>
 									<TouchableOpacity
 										onPress={() => onRemoveFromCart(el.itemObj)}
 									>
@@ -213,9 +168,7 @@ class Products extends Component {
 									</TouchableOpacity>
 								</View>
 							</View>
-							<Left
-								style={styles.subTotalPriceContainer}
-							>
+							<Left style={styles.subTotalPriceContainer}>
 								<Text
 									style={{
 										fontSize: orientation === "portrate" ? scale(12) : scale(14)
@@ -341,7 +294,11 @@ class Products extends Component {
 					</Right>
 				</Header>
 				{this.renderContent()}
-				{this.renderCategoriesList()}
+				<CatergoriesList
+					navigation={navigation}
+					showCategoriesList={this.state.showCategoriesList}
+					onSelectCategoryFromList={this.onSelectCategoryFromList}
+				/>
 			</View>
 		);
 	}

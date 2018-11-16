@@ -15,9 +15,7 @@ import {
 	Title,
 	CardItem,
 	Right,
-	Button,
-	List,
-	ListItem
+	Button
 } from "native-base";
 import {
 	widthPercentageToDP as wp,
@@ -32,6 +30,8 @@ import CachedImage from "react-native-image-cache-wrapper";
 import GridView from "react-native-super-grid";
 import { scale, moderateScale } from "react-native-size-matters";
 import roundTo from "round-to";
+
+import CatergoriesList from "./Shared/CategoriesListEn";
 
 class Products extends Component {
 	state = {
@@ -52,66 +52,18 @@ class Products extends Component {
 		this.scroller.scrollTo({ x: 0, y: 0 });
 	};
 
-	navigateToProducts = (navigate, id, name) => {
-		this.props.onNavigateToProducts(navigate, id, name);
+	onSelectCategoryFromList = () => {
+		this.setState({
+			showCategoriesList: false,
+			currentPage: 1,
+			pageLowerLimit: 0
+		});
 	};
 
 	toggleCategoriesList = () => {
 		this.setState({
 			showCategoriesList: !this.state.showCategoriesList
 		});
-	};
-
-	renderCategoriesList = () => {
-		const { categories, navigation } = this.props;
-		const { showCategoriesList } = this.state;
-		return (
-			<List
-				style={{
-					display: showCategoriesList ? "flex" : "none",
-					backgroundColor: "white"
-				}}
-				dataArray={categories}
-				renderRow={category => (
-					<TouchableOpacity>
-						<ListItem
-							onPress={() => {
-								this.setState({
-									showCategoriesList: false,
-									currentPage: 1,
-									pageLowerLimit: 0
-								});
-								this.navigateToProducts(
-									navigation.navigate,
-									category.id,
-									category.slug
-								);
-								this.scrollToTop();
-							}}
-						>
-							<Left style={styles.catListListItemLeft}>
-								{category.image ? (
-									<CachedImage
-										style={styles.catListProductImg}
-										source={{ uri: category.image.src }}
-										activityIndicator={
-											<ActivityIndicator size="small" color="#968037" />
-										}
-									/>
-								) : null}
-								<Text style={styles.catListListItemText}>{category.slug}</Text>
-							</Left>
-							<Right>
-								<FontAwesome
-									theme={{ iconFamily: "FontAwesome5" }}
-									name="arrow-right"
-								/>
-							</Right>
-						</ListItem>
-					</TouchableOpacity>
-				)}
-			/>
-		);
 	};
 
 	renderContent = () => {
@@ -362,7 +314,11 @@ class Products extends Component {
 					</Right>
 				</Header>
 				{this.renderContent()}
-				{this.renderCategoriesList()}
+				<CatergoriesList
+					navigation={navigation}
+					showCategoriesList={this.state.showCategoriesList}
+					onSelectCategoryFromList={this.onSelectCategoryFromList}
+				/>
 				<AwesomeAlert
 					show={showErrorAlert}
 					showProgress={false}
@@ -384,21 +340,6 @@ class Products extends Component {
 }
 
 const styles = StyleSheet.create({
-	catListListItemLeft: {
-		flex: 1,
-		flexDirection: "row",
-		alignItems: "center"
-	},
-	catListListItemText: {
-		fontSize: scale(12),
-		fontWeight: "bold",
-		marginLeft: scale(10)
-	},
-	catListProductImg: {
-		width: wp("10%"),
-		height: wp("10%"),
-		borderRadius: 5
-	},
 	taxNotification: {
 		fontSize: scale(10),
 		textAlign: "center",
@@ -508,21 +449,15 @@ const mapStateToProps = state => {
 		deviceHeight,
 		currentCategoryName,
 		productsPerPage,
-		showAddtoCartBtn
+		showAddtoCartBtn,
+		resturantData
 	} = state);
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		onAddToCart: item => dispatch({ type: "ADD_TO_CART", payload: item }),
-		onHideErrorMessage: () => dispatch({ type: "HIDE_ERROR_ALERT" }),
-		onNavigateToProducts: (navigate, categoryId, categoryName) =>
-			dispatch({
-				type: "GET_PRODUCTS_BY_CAT_ID",
-				navigate,
-				categoryId,
-				categoryName
-			})
+		onHideErrorMessage: () => dispatch({ type: "HIDE_ERROR_ALERT" })
 	};
 };
 
