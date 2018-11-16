@@ -81,7 +81,7 @@ class Products extends Component {
 			onAddToCart,
 			loading,
 			resturantData: {
-				acf: { color }
+				acf: { color, Tax_Note_Eng, Note_Eng }
 			}
 		} = this.props;
 		const regex = /(<([^>]+)>)/gi;
@@ -103,7 +103,7 @@ class Products extends Component {
 					}}
 					style={{ display: showCategoriesList ? "none" : "flex" }}
 				>
-					<Text style={styles.taxNotification}>Prices include tax</Text>
+					<Text style={styles.taxNotification}>{Tax_Note_Eng}</Text>
 					<GridView
 						contentContainerStyle={styles.gridViewContentContainer}
 						items={productsArr}
@@ -177,10 +177,7 @@ class Products extends Component {
 						showCategoriesList={showCategoriesList}
 						handlePageClick={this.handlePageClick}
 					/>
-					<Text style={styles.noteText}>
-						Nutritnets daily value are based on 2,000 calorie diet. Your daily
-						values may be higher or lower depending on your calorie needs.
-					</Text>
+					<Text style={styles.noteText}>{Note_Eng}</Text>
 				</ScrollView>
 			);
 		} else {
