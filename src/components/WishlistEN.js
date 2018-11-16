@@ -6,17 +6,7 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native";
-import {
-	Header,
-	Left,
-	Card,
-	Body,
-	Title,
-	CardItem,
-	Right,
-	Button,
-	View
-} from "native-base";
+import { Left, Card, CardItem, Right, Button, View } from "native-base";
 import { connect } from "react-redux";
 import {
 	widthPercentageToDP as wp,
@@ -29,6 +19,7 @@ import { scale } from "react-native-size-matters";
 import roundTo from "round-to";
 
 import CatergoriesList from "./Shared/CategoriesListEn";
+import Header from "./Shared/HeaderEn";
 
 class Products extends Component {
 	static navigationOptions = {
@@ -248,51 +239,10 @@ class Products extends Component {
 		const { navigation, orientation } = this.props;
 		return (
 			<View style={{ flex: 1 }}>
-				<Header style={styles.header} androidStatusBarColor="#968037">
-					<Left style={styles.headerLeft}>
-						<Button
-							style={styles.catListListIToggle}
-							onPress={() => navigation.openDrawer()}
-						>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="bars"
-								style={{
-									color: "#E6E2D5",
-									fontSize: orientation === "portrate" ? wp("4%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Left>
-					<Body style={styles.headerBody}>
-						<Title
-							style={{
-								fontWeight: "bold",
-								fontSize: orientation === "portrate" ? scale(14) : scale(16),
-								color: "#E6E2D5"
-							}}
-						>
-							Favorites
-						</Title>
-					</Body>
-					<Right style={styles.headerRight}>
-						<Button style={styles.menuBtn} onPress={this.toggleCategoriesList}>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="th-large"
-								style={{
-									color: "#E6E2D5",
-									fontSize:
-										orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Right>
-				</Header>
+				<Header
+					navigation={navigation}
+					toggleCategoriesList={this.toggleCategoriesList}
+				/>
 				{this.renderContent()}
 				<CatergoriesList
 					navigation={navigation}
