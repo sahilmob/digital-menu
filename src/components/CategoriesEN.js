@@ -139,7 +139,10 @@ class Categories extends Component {
 			orientation,
 			onHideErrorMessage,
 			showErrorAlert,
-			errMsg
+			errMsg,
+			resturantData: {
+				acf: { color }
+			}
 		} = this.props;
 		return (
 			<View
@@ -151,7 +154,10 @@ class Categories extends Component {
 					flex: 1
 				}}
 			>
-				<Header style={styles.header} androidStatusBarColor="#968037">
+				<Header
+					style={[styles.header, { backgroundColor: color }]}
+					androidStatusBarColor={color}
+				>
 					<Left style={styles.headerLeft}>
 						<Button
 							style={styles.menuBtn}
@@ -185,7 +191,7 @@ class Categories extends Component {
 							theme={{ iconFamily: "FontAwesome" }}
 							name="home"
 							style={{
-								color: "#968037",
+								color: color,
 								fontSize: orientation === "portrate" ? wp("4%") : wp("2.5%"),
 								paddingHorizontal: wp("1%"),
 								paddingVertical: wp("1%")
@@ -251,8 +257,7 @@ const styles = StyleSheet.create({
 	header: {
 		display: "flex",
 		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#968037"
+		alignItems: "center"
 	},
 	headerLeft: {
 		flexGrow: 1,
@@ -279,7 +284,8 @@ const mapStateToProps = state => {
 		orientation,
 		deviceWidth,
 		deviceHeight,
-		selectedLanguage
+		selectedLanguage,
+		resturantData
 	} = state);
 };
 
