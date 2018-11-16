@@ -13,13 +13,13 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import CachedImage from "react-native-image-cache-wrapper";
 
 class CategoriesList extends Component {
-	categoryClicked = (id, slug) => {
+	categoryClicked = (id, description) => {
 		const {
 			onSelectCategoryFromList,
 			onNavigateToProducts,
 			navigation
 		} = this.props;
-		onNavigateToProducts(navigation.navigate, id, slug);
+		onNavigateToProducts(navigation.navigate, id, description);
 		onSelectCategoryFromList();
 	};
 
@@ -36,7 +36,7 @@ class CategoriesList extends Component {
 					<TouchableOpacity>
 						<ListItem
 							onPress={() => {
-								this.categoryClicked(category.id, category.slug);
+								this.categoryClicked(category.id, category.description);
 							}}
 						>
 							<Left style={styles.catListListItemLeft}>
@@ -49,7 +49,9 @@ class CategoriesList extends Component {
 										}
 									/>
 								) : null}
-								<Text style={styles.catListListItemText}>{category.slug}</Text>
+								<Text style={styles.catListListItemText}>
+									{category.description}
+								</Text>
 							</Left>
 							<Right>
 								<FontAwesome
