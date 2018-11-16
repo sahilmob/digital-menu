@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
 	btn: {
 		alignSelf: "center",
 		marginTop: 20,
-		backgroundColor: "#968037",
+		backgroundColor: "#ff9955",
 		fontSize: scale(20),
 		width: scale(80)
 	},
 	btnText: {
-		color: "#E6E2D5",
+		color: "#444444",
 		textAlign: "center",
 		width: "100%"
 	}
