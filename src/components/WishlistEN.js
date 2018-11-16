@@ -67,7 +67,10 @@ class Products extends Component {
 			onRemoveFromCart,
 			onAddToCart,
 			totalPrice,
-			onEmptyCart
+			onEmptyCart,
+			resturantData: {
+				acf: { color }
+			}
 		} = this.props;
 		const regex = /(<([^>]+)>)/gi;
 		const { showCategoriesList } = this.state;
@@ -90,7 +93,7 @@ class Products extends Component {
 										fontSize:
 											orientation === "portrate" ? scale(14) : scale(16),
 										fontWeight: "bold",
-										color: "#968037"
+										color
 									}}
 								>
 									{el.itemObj.price} S.R
@@ -101,12 +104,19 @@ class Products extends Component {
 									style={styles.productImg}
 									source={{ uri: el.itemObj.images[0].src }}
 									activityIndicator={
-										<ActivityIndicator size="small" color="#968037" />
+										<ActivityIndicator size="small" color={color} />
 									}
 								/>
 							</Right>
 						</CardItem>
-						<CardItem style={styles.productPriceCardItem}>
+						<CardItem
+							style={[
+								styles.productPriceCardItem,
+								{
+									borderTopColor: color
+								}
+							]}
+						>
 							<View
 								style={{ flexDirection: "row", justifyContent: "flex-end" }}
 							>
@@ -196,8 +206,9 @@ class Products extends Component {
 								<Text
 									style={{
 										fontWeight: "bold",
-										color: "#968037",
-										fontSize: orientation === "portrate" ? scale(12) : scale(14)
+										fontSize:
+											orientation === "portrate" ? scale(12) : scale(14),
+										color
 									}}
 								>
 									Total Price {totalPrice} S.R
@@ -236,7 +247,7 @@ class Products extends Component {
 	};
 
 	render() {
-		const { navigation, orientation } = this.props;
+		const { navigation } = this.props;
 		return (
 			<View style={{ flex: 1 }}>
 				<Header
@@ -289,7 +300,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "flex-end",
-		borderTopColor: "#968037",
 		borderTopWidth: 1
 	},
 	quantityCotrolsContainer: {
@@ -317,47 +327,18 @@ const styles = StyleSheet.create({
 	},
 	auxView: {
 		marginBottom: scale(30)
-	},
-	header: {
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#968037"
-	},
-	headerLeft: {
-		flexGrow: 1,
-		marginLeft: wp("2%")
-	},
-	menuBtn: {
-		backgroundColor: "#444444",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	headerBody: {
-		flex: 1,
-		alignItems: "center"
-	},
-	headerRight: {
-		marginRight: wp("2%")
-	},
-	catListListIToggle: {
-		backgroundColor: "#444444",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center"
 	}
 });
 
 const mapStateToProps = state => {
-	return {
-		categories: state.categories,
-		cart: state.cart,
-		totalPrice: state.totalPrice,
-		orientation: state.orientation,
-		deviceWidth: state.deviceWidth,
-		deviceHeight: state.deviceHeight
-	};
+	return ({
+		categories,
+		cart,
+		totalPrice,
+		deviceWidth,
+		deviceHeight,
+		resturantData
+	} = state);
 };
 
 const mapDispatchToProps = dispatch => {
