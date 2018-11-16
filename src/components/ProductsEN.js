@@ -32,6 +32,7 @@ import { scale, moderateScale } from "react-native-size-matters";
 import roundTo from "round-to";
 
 import CatergoriesList from "./Shared/CategoriesListEn";
+import Pagenation from "./Shared/Pagenation";
 
 class Products extends Component {
 	state = {
@@ -66,6 +67,18 @@ class Products extends Component {
 		});
 	};
 
+	handlePageClick = pageNumber => {
+		const { productsPerPage } = this.props;
+		let pageLowerLimit = pageNumber * productsPerPage - productsPerPage;
+		let pageUpperLimit = pageNumber * productsPerPage - 1;
+		this.setState({
+			currentPage: pageNumber,
+			pageLowerLimit,
+			pageUpperLimit
+		});
+		this.scrollToTop();
+	};
+
 	renderContent = () => {
 		const {
 			categoryProducts,
@@ -74,11 +87,14 @@ class Products extends Component {
 			deviceWidth,
 			showAddtoCartBtn,
 			onAddToCart,
-			loading
+			loading,
+			resturantData: {
+				acf: { color }
+			}
 		} = this.props;
 		const regex = /(<([^>]+)>)/gi;
 
-		const { pageLowerLimit, showCategoriesList } = this.state;
+		const { pageLowerLimit, showCategoriesList, currentPage } = this.state;
 
 		if (categoryProducts.length) {
 			const productsArr = [];
@@ -120,7 +136,7 @@ class Products extends Component {
 										source={{ uri: item.images[0].src }}
 										style={styles.productImg}
 										activityIndicator={
-											<ActivityIndicator size="small" color="#968037" />
+											<ActivityIndicator size="small" color={color} />
 										}
 									/>
 								</CardItem>
@@ -143,7 +159,7 @@ class Products extends Component {
 												fontSize:
 													orientation === "portrate" ? scale(12) : scale(14),
 												fontWeight: "900",
-												color: "#968037"
+												color: color
 											}}
 										>
 											{roundTo.down(item.price * 1.05, 2)} S.R
@@ -164,7 +180,11 @@ class Products extends Component {
 							</Card>
 						)}
 					/>
-					{this.renderPagination()}
+					<Pagenation
+						currentPage={currentPage}
+						showCategoriesList={showCategoriesList}
+						handlePageClick={this.handlePageClick}
+					/>
 					<Text style={styles.noteText}>
 						Nutritnets daily value are based on 2,000 calorie diet. Your daily
 						values may be higher or lower depending on your calorie needs.
@@ -176,80 +196,12 @@ class Products extends Component {
 				<View style={styles.activityIndicatorContainer}>
 					<ActivityIndicator
 						size="large"
-						color="#968037"
+						color={color}
 						style={{ display: loading === true ? "flex" : "none" }}
 					/>
 				</View>
 			);
 		}
-	};
-
-	handlePageClick = pageNumber => {
-		const { productsPerPage } = this.props;
-		let pageLowerLimit = pageNumber * productsPerPage - productsPerPage;
-		let pageUpperLimit = pageNumber * productsPerPage - 1;
-		this.setState({
-			currentPage: pageNumber,
-			pageLowerLimit,
-			pageUpperLimit
-		});
-		this.scrollToTop();
-	};
-
-	renderPagination = () => {
-		let pagination = [];
-		let { categoryProducts, productsPerPage } = this.props;
-		let noOfPages = Math.ceil(categoryProducts.length / productsPerPage);
-		for (let i = 1; i <= noOfPages; i++) {
-			if (noOfPages == 1) {
-				return <View style={{ marginBottom: scale(30) }} />;
-			}
-			if (i === this.state.currentPage) {
-				pagination.push(
-					<Button
-						style={styles.activePageBtn}
-						key={i}
-						disabled
-						onPress={() => this.handlePageClick(i)}
-					>
-						<Text style={styles.activePageBtnText}>{i}</Text>
-					</Button>
-				);
-			} else {
-				pagination.push(
-					<TouchableOpacity key={i}>
-						<Button
-							style={styles.pageBtn}
-							key={i}
-							active={this.state.currentPage === i}
-							bordered
-							warning
-							onPress={() => this.handlePageClick(i)}
-						>
-							<Text style={styles.pageBtnText}>{i}</Text>
-						</Button>
-					</TouchableOpacity>
-				);
-			}
-		}
-		return (
-			<View
-				style={{
-					flex: 1,
-					flexDirection: "row",
-					alignItems: "center",
-					justifyContent: "center",
-					marginTop: wp("3%"),
-					marginBottom: scale(50),
-					flexWrap: "wrap",
-					paddingHorizontal: wp("1.5%"),
-					backgroundColor: "white",
-					display: this.state.showCategoriesList ? "none" : "flex"
-				}}
-			>
-				{pagination}
-			</View>
-		);
 	};
 
 	render() {
@@ -259,7 +211,10 @@ class Products extends Component {
 			orientation,
 			showErrorAlert,
 			errMsg,
-			onHideErrorMessage
+			onHideErrorMessage,
+			resturantData: {
+				acf: { color }
+			}
 		} = this.props;
 		return (
 			<View
@@ -268,7 +223,7 @@ class Products extends Component {
 					flex: 1
 				}}
 			>
-				<Header style={styles.header} androidStatusBarColor="#968037">
+				<Header style={styles.header} androidStatusBarColor={color}>
 					<Left style={styles.headerLeft}>
 						<Button
 							style={styles.catListListIToggle}
@@ -385,21 +340,6 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: hp("50%"),
 		left: wp("50%")
-	},
-	activePageBtn: {
-		padding: 10,
-		backgroundColor: "#968037"
-	},
-	activePageBtnText: {
-		color: "#E6E2D5"
-	},
-	pageBtn: {
-		backgroundColor: "white",
-		padding: 10,
-		borderColor: "#968037"
-	},
-	pageBtnText: {
-		color: "#444444"
 	},
 	header: {
 		display: "flex",
