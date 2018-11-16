@@ -163,7 +163,7 @@ class Products extends Component {
 												<FontAwesome
 													theme={{ iconFamily: "FontAwesome5" }}
 													name="plus-circle"
-													style={styles.addToCartIcon}
+													style={[styles.addToCartIcon, { color }]}
 												/>
 											</TouchableOpacity>
 										) : null}
@@ -281,8 +281,7 @@ const styles = StyleSheet.create({
 	},
 	addToCartIcon: {
 		marginLeft: wp("1.5%"),
-		fontSize: scale(20),
-		color: "#715C31"
+		fontSize: scale(20)
 	},
 	activityIndicatorContainer: {
 		position: "absolute",
