@@ -23,7 +23,7 @@ const AppHeader = props => {
 	return (
 		<Header
 			style={[styles.header, { backgroundColor: color }]}
-			androidStatusBarColor={color}
+			androidStatusBarColor={color ? color : "#ff9955"}
 		>
 			<Left style={styles.headerLeft}>
 				<Button style={styles.menuBtn} onPress={() => openDrawer()}>

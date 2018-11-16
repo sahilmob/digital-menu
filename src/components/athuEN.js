@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button, Form, Item, Input } from "native-base";
 import { scale } from "react-native-size-matters";
 import { connect } from "react-redux";
