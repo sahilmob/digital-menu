@@ -89,16 +89,18 @@ class Products extends Component {
 								this.scrollToTop();
 							}}
 						>
-							{/* <Left style={styles.catListListItemLeft}>
-								<CachedImage
-									style={styles.catListProductImg}
-									source={{ uri: category.image.src }}
-									activityIndicator={
-										<ActivityIndicator size="small" color="#968037" />
-									}
-								/>
+							<Left style={styles.catListListItemLeft}>
+								{category.image ? (
+									<CachedImage
+										style={styles.catListProductImg}
+										source={{ uri: category.image.src }}
+										activityIndicator={
+											<ActivityIndicator size="small" color="#968037" />
+										}
+									/>
+								) : null}
 								<Text style={styles.catListListItemText}>{category.slug}</Text>
-							</Left> */}
+							</Left>
 							<Right>
 								<FontAwesome
 									theme={{ iconFamily: "FontAwesome5" }}
