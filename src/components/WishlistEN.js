@@ -253,6 +253,7 @@ class Products extends Component {
 				<Header
 					navigation={navigation}
 					toggleCategoriesList={this.toggleCategoriesList}
+					title="Favorites"
 				/>
 				{this.renderContent()}
 				<CatergoriesList

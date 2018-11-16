@@ -10,6 +10,7 @@ const AppHeader = props => {
 	const {
 		currentCategoryName,
 		toggleCategoriesList,
+		title,
 		navigation: {
 			openDrawer,
 			state: { key }
@@ -46,7 +47,7 @@ const AppHeader = props => {
 						color: "#E6E2D5"
 					}}
 				>
-					{currentCategoryName}
+					{title}
 				</Title>
 			</Body>
 			<Right style={styles.headerRight}>

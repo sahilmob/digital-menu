@@ -201,6 +201,7 @@ class Products extends Component {
 			navigation,
 			showErrorAlert,
 			errMsg,
+			currentCategoryName,
 			onHideErrorMessage,
 			resturantData: {
 				acf: { color }
@@ -216,6 +217,7 @@ class Products extends Component {
 				<Header
 					navigation={navigation}
 					toggleCategoriesList={this.toggleCategoriesList}
+					title={currentCategoryName}
 				/>
 				{this.renderContent()}
 				<CatergoriesList
