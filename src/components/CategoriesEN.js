@@ -54,7 +54,10 @@ class Categories extends Component {
 			orientation,
 			deviceWidth,
 			categories,
-			onNavigateToProducts
+			onNavigateToProducts,
+			resturantData: {
+				acf: { color }
+			}
 		} = this.props;
 		if (categories.length) {
 			return (
@@ -93,7 +96,7 @@ class Categories extends Component {
 												style={styles.cardItemImage}
 												source={{ uri: item.image.src }}
 												activityIndicator={
-													<ActivityIndicator size="small" color="#968037" />
+													<ActivityIndicator size="small" color={color} />
 												}
 											/>
 										</Body>
@@ -112,7 +115,7 @@ class Categories extends Component {
 				<View style={styles.activityIndicatorContainer}>
 					<ActivityIndicator
 						size="large"
-						color="#968037"
+						color={color}
 						style={{
 							display: loading === true ? "flex" : "none",
 							zIndex: 1000,
