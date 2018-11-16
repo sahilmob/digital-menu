@@ -40,7 +40,8 @@ export default (state = initialState, action) => {
 		case "SET_RESTURANT_DATA": {
 			return {
 				...state,
-				resturantData: action.resturantData
+				resturantData: action.resturantData,
+				productsPerPage: action.resturantData.acf.Product_per_page
 			};
 		}
 		case "GET_PRODUCTS_BY_CAT_ID":
