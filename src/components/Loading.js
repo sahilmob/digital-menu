@@ -30,7 +30,7 @@ class Loading extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<ActivityIndicator size="large" color="#968037" />
+				<ActivityIndicator size="large" color="#ff9955" />
 			</View>
 		);
 	}
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-	return ({ selectedLanguage, restId, categories } = state);
+	return ({ selectedLanguage, restId, categories, resturantData } = state);
 };
 
 export default connect(
