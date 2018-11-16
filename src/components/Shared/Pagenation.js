@@ -37,7 +37,12 @@ const Pagenation = props => {
 			pagination.push(
 				<TouchableOpacity key={i}>
 					<Button
-						style={styles.pageBtn}
+						style={[
+							styles.pageBtn,
+							{
+								borderColor: color
+							}
+						]}
 						key={i}
 						active={currentPage === i}
 						bordered
@@ -79,8 +84,7 @@ const styles = StyleSheet.create({
 	},
 	pageBtn: {
 		backgroundColor: "white",
-		padding: 10,
-		borderColor: "#968037"
+		padding: 10
 	},
 	pageBtnText: {
 		color: "#444444"
