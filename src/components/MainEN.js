@@ -17,7 +17,6 @@ import RNRestart from "react-native-restart";
 import Categories from "./CategoriesEN";
 import Wishlist from "./WishlistEN";
 import Products from "./ProductsEN";
-import Settings from "./SettingsEN";
 
 Main = props => {
 	const {
@@ -68,39 +67,6 @@ Main = props => {
 						/>
 						<Text>تغيير اللغة الى العربية</Text>
 					</TouchableOpacity>
-					<View
-						style={{
-							flex: 1,
-							justifyContent: "flex-end",
-							height:
-								orientation === "portrate"
-									? height > 700
-										? height > 1000
-											? verticalScale(515)
-											: verticalScale(485)
-										: verticalScale(455)
-									: height > 700
-									? verticalScale(250)
-									: height < 500
-									? verticalScale(185)
-									: verticalScale(215)
-						}}
-					>
-						<TouchableOpacity>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="cog"
-								style={{
-									color: drawerProps.activeTintColor,
-									fontSize: scale(16),
-									marginLeft: 25
-								}}
-								onPress={() => {
-									drawerProps.navigation.navigate("Settings");
-								}}
-							/>
-						</TouchableOpacity>
-					</View>
 				</ScrollView>
 			</SafeAreaView>
 		);
@@ -116,12 +82,6 @@ Main = props => {
 			},
 			Products: {
 				screen: Products,
-				navigationOptions: {
-					drawerLabel: () => null
-				}
-			},
-			Settings: {
-				screen: Settings,
 				navigationOptions: {
 					drawerLabel: () => null
 				}
