@@ -34,6 +34,8 @@ import GridView from "react-native-super-grid";
 import { scale, moderateScale } from "react-native-size-matters";
 import roundTo from "round-to";
 
+import CatergoriesList from "./Shared/CategoriesList";
+
 class Products extends Component {
 	state = {
 		currentPage: 1,
@@ -53,58 +55,22 @@ class Products extends Component {
 		this.scroller.scrollTo({ x: 0, y: 0 });
 	};
 
-
 	navigateToProducts = (navigate, id, name) => {
-		this.props.onNavigateToProducts(navigate, id, name)
-	}
+		this.props.onNavigateToProducts(navigate, id, name);
+	};
+
+	onSelectCategoryFromList = () => {
+		this.setState({
+			showCategoriesList: false,
+			currentPage: 1,
+			pageLowerLimit: 0
+		});
+	};
 
 	toggleCategoriesList = () => {
 		this.setState({
 			showCategoriesList: !this.state.showCategoriesList
 		});
-	};
-
-	renderCategoriesList = () => {
-		const { categories, navigation } = this.props;
-		const { showCategoriesList } = this.state;
-		return (
-			<List
-				style={{
-					display: showCategoriesList ? "flex" : "none",
-					backgroundColor: "white"
-				}}
-				dataArray={categories}
-				renderRow={category => (
-					<TouchableOpacity>
-						<ListItem
-							onPress={() => {
-								this.setState({ showCategoriesList: false, currentPage: 1, pageLowerLimit: 0 });
-								this.navigateToProducts(
-									navigation.navigate,
-									category.id,
-									category.name
-								);
-								this.scrollToTop()
-							}}
-						>
-							<Left>
-								<Icon name="arrow-back" />
-							</Left>
-							<Right style={styles.catListListItemRight}>
-								<Text style={styles.catListListItemText}>{category.name}</Text>
-								<CachedImage
-									style={styles.catListProductImg}
-									source={{ uri: category.image.src }}
-									activityIndicator={
-										<ActivityIndicator size="small" color="#968037" />
-									}
-								/>
-							</Right>
-						</ListItem>
-					</TouchableOpacity>
-				)}
-			/>
-		);
 	};
 
 	renderContent = () => {
@@ -145,15 +111,19 @@ class Products extends Component {
 									? deviceWidth > 400
 										? moderateScale(290, 0.7)
 										: deviceWidth < 300
-											? moderateScale(300, 0.7)
-											: moderateScale(280, 0.7)
+										? moderateScale(300, 0.7)
+										: moderateScale(280, 0.7)
 									: deviceWidth > 400
-										? moderateScale(280, 0.6)
-										: moderateScale(350, 0.7),
+									? moderateScale(280, 0.6)
+									: moderateScale(350, 0.7),
 							marginBottom: scale(15)
 						}}
 						renderItem={item => (
-							<Card transparent key={item.id} style={{ height: "100%", alignItems: "flex-end" }}>
+							<Card
+								transparent
+								key={item.id}
+								style={{ height: "100%", alignItems: "flex-end" }}
+							>
 								<CardItem style={styles.cardItemContainer}>
 									<CachedImage
 										source={{ uri: item.images[0].src }}
@@ -202,7 +172,15 @@ class Products extends Component {
 						)}
 					/>
 					{this.renderPagination()}
-					<Text style={styles.noteText}>يحتاج البالغون الى 2000 سعرة حرارية في المتوسط يوميا, وقد تختلف الاحتياجات الفردية من السعرات الحرارية من شخص لآخر. إن القيم الغذائية الموضحة مبنية على المعدلات الوسطية وعلى التركيب النموذجي المعتمد للمنتجات وقد تتفاوت أحجام الوجبات والقيم الغذائية الفعلية كما تخضع المكونات للتغيرات الموسمية ولعوامل أخرى. القيم الغذائية وأحجام الوجبات المعلنة لا تنطبق على طلبات العملاء المعدّلة. البيانات التغذوية الإضافية متاحة عند الطلب.</Text>
+					<Text style={styles.noteText}>
+						يحتاج البالغون الى 2000 سعرة حرارية في المتوسط يوميا, وقد تختلف
+						الاحتياجات الفردية من السعرات الحرارية من شخص لآخر. إن القيم
+						الغذائية الموضحة مبنية على المعدلات الوسطية وعلى التركيب النموذجي
+						المعتمد للمنتجات وقد تتفاوت أحجام الوجبات والقيم الغذائية الفعلية
+						كما تخضع المكونات للتغيرات الموسمية ولعوامل أخرى. القيم الغذائية
+						وأحجام الوجبات المعلنة لا تنطبق على طلبات العملاء المعدّلة. البيانات
+						التغذوية الإضافية متاحة عند الطلب.
+					</Text>
 				</ScrollView>
 			);
 		} else {
@@ -348,7 +326,11 @@ class Products extends Component {
 					</Right>
 				</Header>
 				{this.renderContent()}
-				{this.renderCategoriesList()}
+				<CatergoriesList
+					navigation={navigation}
+					showCategoriesList={this.state.showCategoriesList}
+					onSelectCategoryFromList={this.onSelectCategoryFromList}
+				/>
 				<AwesomeAlert
 					show={showErrorAlert}
 					showProgress={false}
@@ -481,7 +463,7 @@ const styles = StyleSheet.create({
 	noteText: {
 		paddingHorizontal: scale(10),
 		paddingBottom: scale(10),
-		textAlign: 'center'
+		textAlign: "center"
 	}
 });
 
