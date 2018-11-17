@@ -141,7 +141,7 @@ class Categories extends Component {
 					flex: 1
 				}}
 			>
-				<Header navigation={navigation} title="Categories" />
+				<Header navigation={navigation} title="الأقسام" />
 
 				{this.renderContent()}
 				<AwesomeAlert
