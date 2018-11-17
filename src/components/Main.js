@@ -51,7 +51,7 @@ Main = props => {
 					<TouchableOpacity
 						style={{ justifyContent: "flex-end", flexDirection: "row" }}
 						onPress={() => {
-							prop.onSetLanguage();
+							props.onSetLanguage();
 							setTimeout(RNRestart.Restart, 1);
 						}}
 					>
