@@ -13,7 +13,7 @@ import Loading from "./src/components/Loading";
 import SelectLang from "./src/components/SelectLang";
 import MainEN from "./src/components/MainEN";
 import Main from "./src/components/Main";
-import AuthEN from "./src/components/athuEN";
+import AuthEN from "./src/components/AuthEn";
 import SplashScreen from "react-native-splash-screen";
 
 const AppNavigation = createSwitchNavigator({
