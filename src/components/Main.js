@@ -17,7 +17,6 @@ import RNRestart from "react-native-restart";
 import Categories from "./Categories";
 import Wishlist from "./Wishlist";
 import Products from "./Products";
-import Settings from "./Settings";
 
 Main = props => {
 	const {
@@ -52,7 +51,7 @@ Main = props => {
 					<TouchableOpacity
 						style={{ justifyContent: "flex-end", flexDirection: "row" }}
 						onPress={() => {
-							onSetLanguage();
+							prop.onSetLanguage();
 							setTimeout(RNRestart.Restart, 1);
 						}}
 					>
@@ -68,40 +67,6 @@ Main = props => {
 							}}
 						/>
 					</TouchableOpacity>
-					<View
-						style={{
-							flex: 1,
-							alignItems: "flex-end",
-							justifyContent: "flex-end",
-							height:
-								orientation === "portrate"
-									? height > 700
-										? height > 1000
-											? verticalScale(515)
-											: verticalScale(485)
-										: verticalScale(455)
-									: height > 700
-									? verticalScale(250)
-									: height < 500
-									? verticalScale(185)
-									: verticalScale(215)
-						}}
-					>
-						<TouchableOpacity>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="cog"
-								style={{
-									color: drawerProps.activeTintColor,
-									fontSize: scale(16),
-									marginRight: 25
-								}}
-								onPress={() => {
-									drawerProps.navigation.navigate("Settings");
-								}}
-							/>
-						</TouchableOpacity>
-					</View>
 				</ScrollView>
 			</SafeAreaView>
 		);
@@ -120,19 +85,13 @@ Main = props => {
 				navigationOptions: {
 					drawerLabel: () => null
 				}
-			},
-			Settings: {
-				screen: Settings,
-				navigationOptions: {
-					drawerLabel: () => null
-				}
 			}
 		},
 		{
 			drawerPosition: "right",
 			contentComponent: CustomDrawerComponent,
 			contentOptions: {
-				activeTintColor: "#715C31",
+				activeTintColor: color,
 				itemStyle: {
 					flex: 1,
 					flexDirection: "row-reverse",
@@ -144,12 +103,13 @@ Main = props => {
 			}
 		}
 	);
-
 	return <Navigation />;
 };
 
 const mapStateToProps = state => {
-	return ({ resturantData } = state);
+	return {
+		resturantData: state.resturantData
+	};
 };
 
 const mapDispatchToProps = dispatch => {
