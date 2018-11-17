@@ -7,16 +7,7 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native";
-import {
-	Header,
-	Left,
-	Card,
-	Body,
-	Title,
-	CardItem,
-	Right,
-	Button
-} from "native-base";
+import { Card, Body, CardItem } from "native-base";
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
@@ -30,6 +21,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import GridView from "react-native-super-grid";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { scale, moderateScale } from "react-native-size-matters";
+
+import Header from "./Shared/Header";
 
 class Categories extends Component {
 	static navigationOptions = {
@@ -148,48 +141,8 @@ class Categories extends Component {
 					flex: 1
 				}}
 			>
-				<Header style={styles.header} androidStatusBarColor="#968037">
-					<Left style={styles.headerLeft}>
-						<FontAwesome
-							theme={{ iconFamily: "FontAwesome" }}
-							name="home"
-							style={{
-								color: "#968037",
-								fontSize: orientation === "portrate" ? wp("4%") : wp("2.5%"),
-								paddingHorizontal: wp("1%"),
-								paddingVertical: wp("1%")
-							}}
-						/>
-					</Left>
-					<Body style={{ flex: 1, alignItems: "center" }}>
-						<Title
-							style={{
-								fontWeight: "bold",
-								fontSize: orientation === "portrate" ? scale(14) : scale(16),
-								color: "#E6E2D5"
-							}}
-						>
-							الأقسام
-						</Title>
-					</Body>
-					<Right style={styles.headerRight}>
-						<Button
-							style={styles.menuBtn}
-							onPress={() => navigation.openDrawer()}
-						>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="bars"
-								style={{
-									color: "#E6E2D5",
-									fontSize: orientation === "portrate" ? wp("4%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Right>
-				</Header>
+				<Header navigation={navigation} title="Categories" />
+
 				{this.renderContent()}
 				<AwesomeAlert
 					show={showErrorAlert}
