@@ -207,7 +207,8 @@ class Products extends Component {
 			navigation,
 			showErrorAlert,
 			errMsg,
-			onHideErrorMessage
+			onHideErrorMessage,
+			currentCategoryName
 		} = this.props;
 		return (
 			<View
