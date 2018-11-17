@@ -126,7 +126,6 @@ class Categories extends Component {
 			navigation,
 			refreshing,
 			onRefreshCategories,
-			orientation,
 			onHideErrorMessage,
 			showErrorAlert,
 			errMsg
