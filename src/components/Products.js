@@ -23,6 +23,7 @@ import { scale, moderateScale } from "react-native-size-matters";
 import roundTo from "round-to";
 
 import CatergoriesList from "./Shared/CategoriesList";
+import Pagenation from "./Shared/Pagenation";
 import Header from "./Shared/Header";
 
 class Products extends Component {
@@ -72,7 +73,7 @@ class Products extends Component {
 			onAddToCart,
 			loading
 		} = this.props;
-		const { pageLowerLimit, showCategoriesList } = this.state;
+		const { pageLowerLimit, showCategoriesList, currentPage } = this.state;
 
 		if (categoryProducts.length) {
 			const productsArr = [];
@@ -160,7 +161,11 @@ class Products extends Component {
 							</Card>
 						)}
 					/>
-					{this.renderPagination()}
+					<Pagenation
+						currentPage={currentPage}
+						showCategoriesList={showCategoriesList}
+						handlePageClick={this.handlePageClick}
+					/>
 					<Text style={styles.noteText}>
 						يحتاج البالغون الى 2000 سعرة حرارية في المتوسط يوميا, وقد تختلف
 						الاحتياجات الفردية من السعرات الحرارية من شخص لآخر. إن القيم
@@ -195,62 +200,6 @@ class Products extends Component {
 			pageUpperLimit
 		});
 		this.scrollToTop();
-	};
-
-	renderPagination = () => {
-		let pagination = [];
-		let { categoryProducts, productsPerPage } = this.props;
-		let noOfPages = Math.ceil(categoryProducts.length / productsPerPage);
-		for (let i = 1; i <= noOfPages; i++) {
-			if (noOfPages == 1) {
-				return <View style={{ marginBottom: scale(30) }} />;
-			}
-			if (i === this.state.currentPage) {
-				pagination.push(
-					<Button
-						style={styles.activePageBtn}
-						key={i}
-						disabled
-						onPress={() => this.handlePageClick(i)}
-					>
-						<Text style={styles.activePageBtnText}>{i}</Text>
-					</Button>
-				);
-			} else {
-				pagination.push(
-					<TouchableOpacity key={i}>
-						<Button
-							style={styles.pageBtn}
-							key={i}
-							active={this.state.currentPage === i}
-							bordered
-							warning
-							onPress={() => this.handlePageClick(i)}
-						>
-							<Text style={styles.pageBtnText}>{i}</Text>
-						</Button>
-					</TouchableOpacity>
-				);
-			}
-		}
-		return (
-			<View
-				style={{
-					flex: 1,
-					flexDirection: "row",
-					alignItems: "center",
-					justifyContent: "center",
-					marginTop: wp("3%"),
-					marginBottom: scale(50),
-					flexWrap: "wrap",
-					paddingHorizontal: wp("1.5%"),
-					backgroundColor: "white",
-					display: this.state.showCategoriesList ? "none" : "flex"
-				}}
-			>
-				{pagination}
-			</View>
-		);
 	};
 
 	render() {
