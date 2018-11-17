@@ -71,7 +71,10 @@ class Products extends Component {
 			deviceWidth,
 			showAddtoCartBtn,
 			onAddToCart,
-			loading
+			loading,
+			resturantData: {
+				acf: { color, Arabic_note, Tax_Note_arabic }
+			}
 		} = this.props;
 		const { pageLowerLimit, showCategoriesList, currentPage } = this.state;
 
@@ -90,7 +93,7 @@ class Products extends Component {
 					}}
 					style={{ display: showCategoriesList ? "none" : "flex" }}
 				>
-					<Text style={styles.taxNotification}>الاسعار شاملة الضريبة</Text>
+					<Text style={styles.taxNotification}>{Tax_Note_arabic}</Text>
 					<GridView
 						contentContainerStyle={styles.gridViewContentContainer}
 						items={productsArr}
@@ -119,7 +122,7 @@ class Products extends Component {
 										source={{ uri: item.images[0].src }}
 										style={styles.productImg}
 										activityIndicator={
-											<ActivityIndicator size="small" color="#968037" />
+											<ActivityIndicator size="small" color={color} />
 										}
 									/>
 								</CardItem>
@@ -140,7 +143,7 @@ class Products extends Component {
 												<FontAwesome
 													theme={{ iconFamily: "FontAwesome5" }}
 													name="plus-circle"
-													style={styles.addToCartIcon}
+													style={[styles.addToCartIcon, { color }]}
 												/>
 											</TouchableOpacity>
 										) : null}
@@ -151,7 +154,7 @@ class Products extends Component {
 												fontSize:
 													orientation === "portrate" ? scale(12) : scale(14),
 												fontWeight: "900",
-												color: "#968037"
+												color
 											}}
 										>
 											{roundTo.down(item.price * 1.05, 2)} ر.س
@@ -166,15 +169,7 @@ class Products extends Component {
 						showCategoriesList={showCategoriesList}
 						handlePageClick={this.handlePageClick}
 					/>
-					<Text style={styles.noteText}>
-						يحتاج البالغون الى 2000 سعرة حرارية في المتوسط يوميا, وقد تختلف
-						الاحتياجات الفردية من السعرات الحرارية من شخص لآخر. إن القيم
-						الغذائية الموضحة مبنية على المعدلات الوسطية وعلى التركيب النموذجي
-						المعتمد للمنتجات وقد تتفاوت أحجام الوجبات والقيم الغذائية الفعلية
-						كما تخضع المكونات للتغيرات الموسمية ولعوامل أخرى. القيم الغذائية
-						وأحجام الوجبات المعلنة لا تنطبق على طلبات العملاء المعدّلة. البيانات
-						التغذوية الإضافية متاحة عند الطلب.
-					</Text>
+					<Text style={styles.noteText}>{Arabic_note}</Text>
 				</ScrollView>
 			);
 		} else {
@@ -182,7 +177,7 @@ class Products extends Component {
 				<View style={styles.activityIndicatorContainer}>
 					<ActivityIndicator
 						size="large"
-						color="#968037"
+						color={color}
 						style={{ display: loading === true ? "flex" : "none" }}
 					/>
 				</View>
@@ -289,28 +284,12 @@ const styles = StyleSheet.create({
 	},
 	addToCartIcon: {
 		marginLeft: wp("1.5%"),
-		fontSize: scale(20),
-		color: "#715C31"
+		fontSize: scale(20)
 	},
 	activityIndicatorContainer: {
 		position: "absolute",
 		top: hp("50%"),
 		left: wp("50%")
-	},
-	activePageBtn: {
-		padding: 10,
-		backgroundColor: "#968037"
-	},
-	activePageBtnText: {
-		color: "#E6E2D5"
-	},
-	pageBtn: {
-		backgroundColor: "white",
-		padding: 10,
-		borderColor: "#968037"
-	},
-	pageBtnText: {
-		color: "#444444"
 	},
 	noteText: {
 		paddingHorizontal: scale(10),
@@ -331,7 +310,8 @@ const mapStateToProps = state => {
 		deviceHeight,
 		currentCategoryName,
 		productsPerPage,
-		showAddtoCartBtn
+		showAddtoCartBtn,
+		resturantData
 	} = state);
 };
 
