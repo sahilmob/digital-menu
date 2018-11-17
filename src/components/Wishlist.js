@@ -6,20 +6,7 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native";
-import {
-	Header,
-	Left,
-	Card,
-	Body,
-	Title,
-	CardItem,
-	Right,
-	Button,
-	View,
-	ListItem,
-	List,
-	Icon
-} from "native-base";
+import { Left, Card, CardItem, Right, Button, View } from "native-base";
 import { connect } from "react-redux";
 import {
 	widthPercentageToDP as wp,
@@ -30,6 +17,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import CachedImage from "react-native-image-cache-wrapper";
 import { scale } from "react-native-size-matters";
 import roundTo from "round-to";
+
+import CatergoriesList from "./Shared/CategoriesList";
+import Header from "./Shared/Header";
 
 class Products extends Component {
 	static navigationOptions = {
@@ -63,46 +53,12 @@ class Products extends Component {
 		});
 	};
 
-	renderCategoriesList = () => {
-		const { onNavigateToProducts, categories, navigation } = this.props;
-		const { showCategoriesList } = this.state;
-		return (
-			<List
-				style={{
-					display: showCategoriesList ? "flex" : "none",
-					backgroundColor: "white"
-				}}
-				dataArray={categories}
-				renderRow={category => (
-					<TouchableOpacity>
-						<ListItem
-							onPress={() => {
-								this.setState({ showCategoriesList: false });
-								onNavigateToProducts(
-									navigation.navigate,
-									category.id,
-									category.name
-								);
-							}}
-						>
-							<Left>
-								<Icon name="arrow-back" />
-							</Left>
-							<Right style={styles.catListListItemRight}>
-								<Text style={styles.catListListItemText}>{category.name}</Text>
-								<CachedImage
-									style={styles.catListProductImg}
-									source={{ uri: category.image.src }}
-									activityIndicator={
-										<ActivityIndicator size="small" color="#968037" />
-									}
-								/>
-							</Right>
-						</ListItem>
-					</TouchableOpacity>
-				)}
-			/>
-		);
+	onSelectCategoryFromList = () => {
+		this.setState({
+			showCategoriesList: false,
+			currentPage: 1,
+			pageLowerLimit: 0
+		});
 	};
 
 	renderContent = () => {
@@ -283,78 +239,26 @@ class Products extends Component {
 	};
 
 	render() {
-		const { navigation, orientation } = this.props;
+		const { navigation } = this.props;
 		return (
 			<View style={{ flex: 1 }}>
-				<Header style={styles.header} androidStatusBarColor="#968037">
-					<Left style={styles.headerLeft}>
-						<Button style={styles.menuBtn} onPress={this.toggleCategoriesList}>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="th-large"
-								style={{
-									color: "#E6E2D5",
-									fontSize:
-										orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Left>
-					<Body style={styles.headerBody}>
-						<Title
-							style={{
-								fontWeight: "bold",
-								fontSize: orientation === "portrate" ? scale(14) : scale(16),
-								color: "#E6E2D5"
-							}}
-						>
-							المفضلة
-						</Title>
-					</Body>
-					<Right style={styles.headerRight}>
-						<Button
-							style={styles.catListListIToggle}
-							onPress={() => navigation.openDrawer()}
-						>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="bars"
-								style={{
-									color: "#E6E2D5",
-									fontSize: orientation === "portrate" ? wp("4%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Right>
-				</Header>
+				<Header
+					navigation={navigation}
+					toggleCategoriesList={this.toggleCategoriesList}
+					title="المفضلة"
+				/>
 				{this.renderContent()}
-				{this.renderCategoriesList()}
+				<CatergoriesList
+					navigation={navigation}
+					showCategoriesList={this.state.showCategoriesList}
+					onSelectCategoryFromList={this.onSelectCategoryFromList}
+				/>
 			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	catListListItemRight: {
-		flex: 1,
-		flexDirection: "row",
-		justifyContent: "flex-end",
-		alignItems: "center"
-	},
-	catListListItemText: {
-		fontSize: scale(12),
-		fontWeight: "bold",
-		marginRight: scale(10)
-	},
-	catListProductImg: {
-		width: wp("10%"),
-		height: wp("10%"),
-		borderRadius: 5
-	},
 	productCardItem: {
 		flex: 1,
 		justifyContent: "center"
@@ -394,29 +298,6 @@ const styles = StyleSheet.create({
 	},
 	auxView: {
 		marginBottom: scale(30)
-	},
-	header: {
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#968037"
-	},
-	headerLeft: {
-		flexGrow: 1,
-		marginLeft: wp("2%")
-	},
-	menuBtn: {
-		backgroundColor: "#444444",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	headerBody: {
-		flex: 1,
-		alignItems: "center"
-	},
-	headerRight: {
-		marginRight: wp("2%")
 	},
 	catListListIToggle: {
 		backgroundColor: "#444444",
