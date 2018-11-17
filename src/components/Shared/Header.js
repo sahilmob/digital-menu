@@ -15,7 +15,6 @@ import { scale } from "react-native-size-matters";
 
 AppHeader = props => {
 	const {
-		currentCategoryName,
 		toggleCategoriesList,
 		title,
 		navigation: {
@@ -28,7 +27,15 @@ AppHeader = props => {
 		}
 	} = props;
 	return (
-		<Header style={styles.header} androidStatusBarColor="#968037">
+		<Header
+			style={[
+				styles.header,
+				{
+					backgroundColor: color
+				}
+			]}
+			androidStatusBarColor={color}
+		>
 			<Left style={styles.headerLeft}>
 				{key === "Categories" ? (
 					<FontAwesome
@@ -97,8 +104,7 @@ const styles = StyleSheet.create({
 	header: {
 		display: "flex",
 		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#968037"
+		alignItems: "center"
 	},
 	headerLeft: {
 		flexGrow: 1,
