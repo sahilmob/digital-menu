@@ -68,15 +68,16 @@ class CategoriesList extends Component {
 }
 
 const styles = StyleSheet.create({
-	catListListItemLeft: {
+	catListListItemRight: {
 		flex: 1,
 		flexDirection: "row",
+		justifyContent: "flex-end",
 		alignItems: "center"
 	},
 	catListListItemText: {
 		fontSize: scale(12),
 		fontWeight: "bold",
-		marginLeft: scale(10)
+		marginRight: scale(10)
 	},
 	catListProductImg: {
 		width: wp("10%"),

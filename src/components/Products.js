@@ -352,22 +352,6 @@ class Products extends Component {
 }
 
 const styles = StyleSheet.create({
-	catListListItemRight: {
-		flex: 1,
-		flexDirection: "row",
-		justifyContent: "flex-end",
-		alignItems: "center"
-	},
-	catListListItemText: {
-		fontSize: scale(12),
-		fontWeight: "bold",
-		marginRight: scale(10)
-	},
-	catListProductImg: {
-		width: wp("10%"),
-		height: wp("10%"),
-		borderRadius: 5
-	},
 	taxNotification: {
 		fontSize: scale(10),
 		textAlign: "center",
