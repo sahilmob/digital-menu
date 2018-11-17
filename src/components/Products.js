@@ -7,19 +7,7 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native";
-import {
-	Header,
-	Left,
-	Card,
-	Body,
-	Title,
-	CardItem,
-	Right,
-	Button,
-	List,
-	ListItem,
-	Icon
-} from "native-base";
+import { Left, Card, CardItem, Right, Button } from "native-base";
 import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
@@ -35,6 +23,7 @@ import { scale, moderateScale } from "react-native-size-matters";
 import roundTo from "round-to";
 
 import CatergoriesList from "./Shared/CategoriesList";
+import Header from "./Shared/Header";
 
 class Products extends Component {
 	state = {
@@ -266,9 +255,7 @@ class Products extends Component {
 
 	render() {
 		const {
-			currentCategoryName,
 			navigation,
-			orientation,
 			showErrorAlert,
 			errMsg,
 			onHideErrorMessage
@@ -280,51 +267,11 @@ class Products extends Component {
 					flex: 1
 				}}
 			>
-				<Header style={styles.header} androidStatusBarColor="#968037">
-					<Left style={styles.headerLeft}>
-						<Button style={styles.menuBtn} onPress={this.toggleCategoriesList}>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="th-large"
-								style={{
-									color: "#E6E2D5",
-									fontSize:
-										orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Left>
-					<Body style={styles.headerBody}>
-						<Title
-							style={{
-								fontWeight: "bold",
-								fontSize: orientation === "portrate" ? scale(14) : scale(16),
-								color: "#E6E2D5"
-							}}
-						>
-							{currentCategoryName}
-						</Title>
-					</Body>
-					<Right style={styles.headerRight}>
-						<Button
-							style={styles.catListListIToggle}
-							onPress={() => navigation.openDrawer()}
-						>
-							<FontAwesome
-								theme={{ iconFamily: "FontAwesome" }}
-								name="bars"
-								style={{
-									color: "#E6E2D5",
-									fontSize: orientation === "portrate" ? wp("4%") : wp("2.5%"),
-									paddingHorizontal: wp("1%"),
-									paddingVertical: wp("1%")
-								}}
-							/>
-						</Button>
-					</Right>
-				</Header>
+				<Header
+					navigation={navigation}
+					toggleCategoriesList={this.toggleCategoriesList}
+					title={currentCategoryName}
+				/>
 				{this.renderContent()}
 				<CatergoriesList
 					navigation={navigation}
@@ -414,35 +361,6 @@ const styles = StyleSheet.create({
 	},
 	pageBtnText: {
 		color: "#444444"
-	},
-	header: {
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#968037"
-	},
-	headerLeft: {
-		flexGrow: 1,
-		marginLeft: wp("2%")
-	},
-	menuBtn: {
-		backgroundColor: "#444444",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	headerBody: {
-		flex: 1,
-		alignItems: "center"
-	},
-	headerRight: {
-		marginRight: wp("2%")
-	},
-	catListListIToggle: {
-		backgroundColor: "#444444",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center"
 	},
 	noteText: {
 		paddingHorizontal: scale(10),
