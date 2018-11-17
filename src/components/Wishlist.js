@@ -204,8 +204,9 @@ class Products extends Component {
 								<Text
 									style={{
 										fontWeight: "bold",
-										color: "#968037",
-										fontSize: orientation === "portrate" ? scale(12) : scale(14)
+										fontSize:
+											orientation === "portrate" ? scale(12) : scale(14),
+										color
 									}}
 								>
 									السعر الاجمالي: {totalPrice} ر.س
