@@ -196,25 +196,6 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: hp("-10%"),
 		left: wp("50%")
-	},
-	header: {
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "#968037"
-	},
-	headerLeft: {
-		flexGrow: 1,
-		marginLeft: wp("2%")
-	},
-	headerRight: {
-		marginRight: wp("2%")
-	},
-	menuBtn: {
-		backgroundColor: "#444444",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center"
 	}
 });
 
