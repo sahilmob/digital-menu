@@ -68,7 +68,10 @@ class Products extends Component {
 			onRemoveFromCart,
 			onAddToCart,
 			totalPrice,
-			onEmptyCart
+			onEmptyCart,
+			resturantData: {
+				acf: { color }
+			}
 		} = this.props;
 		const { showCategoriesList } = this.state;
 		if (cart.length) {
@@ -82,7 +85,7 @@ class Products extends Component {
 									style={styles.productImg}
 									source={{ uri: el.itemObj.images[0].src }}
 									activityIndicator={
-										<ActivityIndicator size="small" color="#968037" />
+										<ActivityIndicator size="small" color={color} />
 									}
 								/>
 							</Left>
@@ -101,14 +104,16 @@ class Products extends Component {
 										fontSize:
 											orientation === "portrate" ? scale(14) : scale(16),
 										fontWeight: "bold",
-										color: "#968037"
+										color
 									}}
 								>
 									{el.itemObj.price} ر.س
 								</Text>
 							</Right>
 						</CardItem>
-						<CardItem style={styles.productPriceCardItem}>
+						<CardItem
+							style={[styles.productPriceCardItem, { borderTopColor: color }]}
+						>
 							<Left
 								style={{ flexDirection: "row", justifyContent: "flex-start" }}
 							>
@@ -276,7 +281,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "flex-end",
-		borderTopColor: "#968037",
 		borderTopWidth: 1
 	},
 	quantityCotrolsContainer: {
@@ -308,14 +312,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-	return {
-		categories: state.categories,
-		cart: state.cart,
-		totalPrice: state.totalPrice,
-		orientation: state.orientation,
-		deviceWidth: state.deviceWidth,
-		deviceHeight: state.deviceHeight
-	};
+	return ({
+		categories,
+		cart,
+		totalPrice,
+		orientation,
+		deviceWidth,
+		deviceHeight,
+		resturantData
+	} = state);
 };
 
 const mapDispatchToProps = dispatch => {
