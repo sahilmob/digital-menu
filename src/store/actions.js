@@ -1,8 +1,9 @@
 import axios from "axios";
-export const setResturantData = resturantData => {
+export const setResturantData = (resturantData, restId) => {
 	return {
 		type: "SET_RESTURANT_DATA",
-		resturantData
+		resturantData,
+		restId
 	};
 };
 export const saveProduncts = products => {
@@ -60,8 +61,9 @@ export const onHideErrorAlert = () => {
 	};
 };
 
-export const fetchResturants = () => {
+export const fetchResturants = restId => {
 	return (dispatch, getState) => {
+		dispatch(setLoadingTrue());
 		axios({
 			method: "get",
 			baseURL: "https://almenu.net/wp-json/wp/v2/res",
@@ -70,15 +72,17 @@ export const fetchResturants = () => {
 			}
 		})
 			.then(({ data }) => {
+				dispatch(setLoadingFalse());
 				const resturantData = data.find(({ slug }) => {
-					return slug === getState().restId;
+					return slug === restId;
 				});
 				if (!resturantData) {
-					return dispatch(onShowErrorAlert("Resturant data are invlaid"));
+					return dispatch(onShowErrorAlert("Resturant data are invalid"));
 				}
-				return dispatch(setResturantData(resturantData));
+				return dispatch(setResturantData(resturantData, restId));
 			})
 			.catch(err => {
+				dispatch(setLoadingFalse());
 				dispatch(onShowErrorAlert(err));
 			});
 	};
@@ -93,7 +97,6 @@ export const fetchProducts = (url, id, pass) => {
 			categories.map(cat => {
 				axios({
 					method: "get",
-					// baseURL: "https://lemoulinbakery.com.sa/wp-json/wc/v2",
 					baseURL: `${url}wp-json/wc/v2`,
 					url: `/products`,
 					auth: {
@@ -111,64 +114,16 @@ export const fetchProducts = (url, id, pass) => {
 					})
 					.catch(err => {
 						dispatch(setLoadingFalse());
-						// if (err == "Error: Network Error") {
-						// 	dispatch(
-						// 		onShowErrorAlert(
-						// 			"عذرا، لا يوجد إتصال بالانترنت، تأكد من الاتصال ثم قم بتحديث الصفحة"
-						// 		)
-						// 	);
-						// } else {
-						// 	dispatch(onShowErrorAlert(err));
-						// }
 					});
 			});
 		}
 	};
 };
-
-// export const refreshProducts = () => {
-// 	return (dispatch, getState) => {
-// 		dispatch(setRefreshingTrue());
-// 		const { currentCategoryId } = getState;
-// 		axios({
-// 			method: "get",
-// 			baseURL: "https://lemol.sheraa.sa/wp-json/wc/v2",
-// 			url: "/products",
-// 			params: {
-// 				category: currentCategoryId,
-// 				per_page: 100
-// 			},
-// 			auth: {
-// 				username: "ck_78bbb572b458e6b9d9993eb5864a8268c7221e1c",
-// 				password: "cs_f4abfebe27b3232933d9367cef57c147fc2d86cd"
-// 			}
-// 		})
-// 			.then(res => {
-// 				dispatch(saveProduncts(res.data));
-// 				dispatch(setRefreshingFalse());
-// 			})
-// 			.catch(err => {
-// 				dispatch(setRefreshingFalse());
-// 				if (err == "Error: Network Error") {
-// 					dispatch(
-// 						onShowErrorAlert(
-// 							"عذرا، لا يوجد إتصال بالانترنت، تأكد من الاتصال ثم قم بتحديث الصفحة"
-// 						)
-// 					);
-// 				} else {
-// 					dispatch(onShowErrorAlert(err));
-// 				}
-// 			});
-// 	};
-// };
-
 export const getCategories = (url, id, pass) => {
 	return dispatch => {
 		dispatch(setLoadingTrue());
 		axios({
 			method: "get",
-			// baseURL: "https://lemoulinbakery.com.sa/wp-json/wc/v2",
-			// baseURL: "https://lemol.sheraaholding.sa/wp-json/wc/v2",
 			baseURL: `${url}wp-json/wc/v2`,
 			url: "/products/categories",
 			params: { per_page: 100 },
@@ -186,15 +141,6 @@ export const getCategories = (url, id, pass) => {
 			})
 			.catch(err => {
 				dispatch(setLoadingFalse());
-				// if (err == "Error: Network Error") {
-				// 	dispatch(
-				// 		onShowErrorAlert(
-				// 			"عذرا، لا يوجد إتصال بالانترنت، تأكد من الاتصال ثم قم بتحديث الصفحة"
-				// 		)
-				// 	);
-				// } else {
-				// 	dispatch(onShowErrorAlert(err));
-				// }
 			});
 	};
 };
@@ -204,7 +150,6 @@ export const refreshCategories = () => {
 		dispatch(setRefreshingTrue());
 		axios({
 			method: "get",
-			// baseURL: "https://lemoulinbakery.com.sa/wp-json/wc/v2",
 			baseURL: "https://lemol.sheraaholding.sa/wp-json/wc/v2",
 			url: "/products/categories",
 			params: { per_page: 100 },
@@ -222,17 +167,6 @@ export const refreshCategories = () => {
 			})
 			.catch(err => {
 				dispatch(setRefreshingFalse());
-				// if (err == "Error: Network Error") {
-				// 	dispatch(setRefreshingFalse());
-				// 	dispatch(
-				// 		onShowErrorAlert(
-				// 			"عذرا، لا يوجد إتصال بالانترنت، تأكد من الاتصال ثم قم بتحديث الصفحة"
-				// 		)
-				// 	);
-				// } else {
-				// 	dispatch(setRefreshingFalse());
-				// 	dispatch(onShowErrorAlert("خطأ في الاتصال"));
-				// }
 			});
 	};
 };

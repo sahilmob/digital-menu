@@ -31,17 +31,12 @@ export default (state = initialState, action) => {
 				selectedLanguage: action.lang
 			};
 		}
-		case "SET_REST_CREDNTIALS": {
-			return {
-				...state,
-				restId: action.restId
-			};
-		}
 		case "SET_RESTURANT_DATA": {
 			return {
 				...state,
 				resturantData: action.resturantData,
-				productsPerPage: action.resturantData.acf.Product_per_page
+				productsPerPage: action.resturantData.acf.Product_per_page,
+				restId: action.restId
 			};
 		}
 		case "GET_PRODUCTS_BY_CAT_ID":

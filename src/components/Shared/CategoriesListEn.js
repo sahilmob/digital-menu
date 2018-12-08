@@ -24,7 +24,13 @@ class CategoriesList extends Component {
 	};
 
 	render() {
-		const { categories, showCategoriesList } = this.props;
+		const {
+			categories,
+			showCategoriesList,
+			resturantData: {
+				acf: { color }
+			}
+		} = this.props;
 		return (
 			<List
 				style={{
@@ -45,7 +51,7 @@ class CategoriesList extends Component {
 										style={styles.catListProductImg}
 										source={{ uri: category.image.src }}
 										activityIndicator={
-											<ActivityIndicator size="small" color="#968037" />
+											<ActivityIndicator size="small" color={color} />
 										}
 									/>
 								) : null}
@@ -87,7 +93,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
 	return {
-		categories: state.categories
+		categories: state.categories,
+		resturantData: state.resturantData
 	};
 };
 
