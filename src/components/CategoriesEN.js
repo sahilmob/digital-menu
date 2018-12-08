@@ -19,7 +19,6 @@ import { checkStore, refreshCategories } from "../store/actions";
 import CachedImage from "react-native-image-cache-wrapper";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import GridView from "react-native-super-grid";
-import AwesomeAlert from "react-native-awesome-alerts";
 import { scale, moderateScale } from "react-native-size-matters";
 
 import Header from "./Shared/HeaderEn";
@@ -128,17 +127,7 @@ class Categories extends Component {
 	};
 
 	render() {
-		const {
-			navigation,
-			refreshing,
-			onRefreshCategories,
-			onHideErrorMessage,
-			showErrorAlert,
-			errMsg,
-			resturantData: {
-				acf: { color }
-			}
-		} = this.props;
+		const { navigation, refreshing, onRefreshCategories } = this.props;
 		return (
 			<View
 				refreshing={refreshing}
@@ -150,23 +139,7 @@ class Categories extends Component {
 				}}
 			>
 				<Header navigation={navigation} title="Categories" />
-
 				{this.renderContent()}
-				<AwesomeAlert
-					show={showErrorAlert}
-					showProgress={false}
-					title="تنبيه"
-					message={errMsg}
-					closeOnTouchOutside={true}
-					closeOnHardwareBackPress={false}
-					showCancelButton={true}
-					showConfirmButton={false}
-					cancelText="إخفاء"
-					cancelButtonColor="red"
-					onCancelPressed={() => {
-						onHideErrorMessage();
-					}}
-				/>
 			</View>
 		);
 	}
