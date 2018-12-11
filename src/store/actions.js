@@ -114,7 +114,6 @@ export const fetchProducts = (url, id, pass) => {
 				})
 					.then(({ data }) => {
 						dispatch(saveProduncts(data));
-						console.log(data);
 					})
 					.catch(err => {
 						dispatch(setLoadingFalse());
@@ -137,7 +136,6 @@ export const getCategories = (url, id, pass) => {
 			}
 		})
 			.then(({ data }) => {
-				console.log(data);
 				dispatch(saveCategories(data));
 				dispatch(setLoadingFalse());
 				dispatch(clearProducts());
@@ -150,16 +148,17 @@ export const getCategories = (url, id, pass) => {
 };
 
 export const refreshCategories = () => {
-	return dispatch => {
+	return (dispatch, getState) => {
+		const { url, id, pass } = getState().resturantData.acf;
 		dispatch(setRefreshingTrue());
 		axios({
 			method: "get",
-			baseURL: "https://lemol.sheraaholding.sa/wp-json/wc/v2",
+			baseURL: `${url}wp-json/wc/v2`,
 			url: "/products/categories",
 			params: { per_page: 100 },
 			auth: {
-				username: "ck_78bbb572b458e6b9d9993eb5864a8268c7221e1c",
-				password: "cs_f4abfebe27b3232933d9367cef57c147fc2d86cd"
+				username: id,
+				password: pass
 			},
 			timeout: 60000
 		})
