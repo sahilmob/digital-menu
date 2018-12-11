@@ -77,7 +77,11 @@ export const fetchResturants = restId => {
 					return slug === restId;
 				});
 				if (!resturantData) {
-					return dispatch(onShowErrorAlert("Resturant data are invalid"));
+					if (getState().selectedLanguage === "en") {
+						return dispatch(onShowErrorAlert("Resturant data are invalid"));
+					} else {
+						return dispatch(onShowErrorAlert("معلومات المطعم غير صحيحه"));
+					}
 				}
 				return dispatch(setResturantData(resturantData, restId));
 			})

@@ -220,7 +220,8 @@ export default (state = initialState, action) => {
 		case "HIDE_ERROR_ALERT":
 			return {
 				...state,
-				showErrorAlert: false
+				showErrorAlert: false,
+				errMsg: null
 			};
 		case "SET_DEVICE_DIMENSIONS":
 			return {
