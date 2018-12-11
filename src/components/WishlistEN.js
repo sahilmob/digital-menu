@@ -100,13 +100,15 @@ class Products extends Component {
 								</Text>
 							</Left>
 							<Right>
-								<CachedImage
-									style={styles.productImg}
-									source={{ uri: el.itemObj.images[0].src }}
-									activityIndicator={
-										<ActivityIndicator size="small" color={color} />
-									}
-								/>
+								{el.itemObj.images[0].src ? (
+									<CachedImage
+										style={styles.productImg}
+										source={{ uri: el.itemObj.images[0].src }}
+										activityIndicator={
+											<ActivityIndicator size="small" color={color} />
+										}
+									/>
+								) : null}
 							</Right>
 						</CardItem>
 						<CardItem
@@ -120,7 +122,7 @@ class Products extends Component {
 							<View
 								style={{ flexDirection: "row", justifyContent: "flex-end" }}
 							>
-								<View style={styles.quantityCotrolsContainer}>
+								<View style={styles.quantityControlsContainer}>
 									<Text
 										style={{
 											fontSize:
@@ -303,7 +305,7 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-end",
 		borderTopWidth: 1
 	},
-	quantityCotrolsContainer: {
+	quantityControlsContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		marginRight: 25

@@ -81,13 +81,15 @@ class Products extends Component {
 					<Card key={el.id}>
 						<CardItem style={styles.productCardItem}>
 							<Left>
-								<CachedImage
-									style={styles.productImg}
-									source={{ uri: el.itemObj.images[0].src }}
-									activityIndicator={
-										<ActivityIndicator size="small" color={color} />
-									}
-								/>
+								{el.itemObj.images[0].src ? (
+									<CachedImage
+										style={styles.productImg}
+										source={{ uri: el.itemObj.images[0].src }}
+										activityIndicator={
+											<ActivityIndicator size="small" color={color} />
+										}
+									/>
+								) : null}
 							</Left>
 							<Right style={styles.productCardItemRight}>
 								<Text
@@ -143,7 +145,7 @@ class Products extends Component {
 							<View
 								style={{ flexDirection: "row", justifyContent: "flex-end" }}
 							>
-								<View style={styles.quantityCotrolsContainer}>
+								<View style={styles.quantityControlsContainer}>
 									<TouchableOpacity
 										onPress={() => onRemoveFromCart(el.itemObj)}
 									>
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-end",
 		borderTopWidth: 1
 	},
-	quantityCotrolsContainer: {
+	quantityControlsContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		marginRight: 5,
