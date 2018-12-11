@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button, Form, Item, Input } from "native-base";
 import { scale } from "react-native-size-matters";
 import { connect } from "react-redux";
-import AwesomeAlert from "react-native-awesome-alerts";
+import Modal from "react-native-modal";
 
 import { fetchResturants } from "../store/actions";
 
@@ -12,13 +12,18 @@ class Main extends Component {
 		restId: null
 	};
 	handleClick = () => {
-		this.props.onSetRestCredentials(this.state.restId);
+		this.props.onFetchResturants(this.state.restId);
 	};
 
 	handleChange = id => {
-		this.setState({
-			restId: id
-		});
+		this.setState(
+			{
+				restId: id
+			},
+			() => {
+				console.log(this.state.restId);
+			}
+		);
 	};
 
 	componentDidUpdate(prevProps) {
@@ -34,9 +39,27 @@ class Main extends Component {
 
 	render() {
 		const { handleClick } = this;
-		const { showErrorAlert, errMsg, onHideErrorMessage } = this.props;
+		const { showErrorAlert, errMsg, onHideErrorMessage, loading } = this.props;
 		return (
 			<View style={styles.outer}>
+				<Modal isVisible={showErrorAlert}>
+					<View style={styles.modal}>
+						<Text>{errMsg}</Text>
+						<Button
+							style={styles.btn}
+							onPress={() => {
+								onHideErrorMessage();
+							}}
+						>
+							<Text style={styles.btnText}>إخفاء</Text>
+						</Button>
+					</View>
+				</Modal>
+				<Modal isVisible={loading}>
+					<View style={styles.modal}>
+						<Text>يرجى الإنتظار</Text>
+					</View>
+				</Modal>
 				<Form>
 					<Item>
 						<Input
@@ -44,12 +67,6 @@ class Main extends Component {
 							onChangeText={id => this.handleChange(id)}
 						/>
 					</Item>
-					{/* <Item last>
-						<Input placeholder="ID" />
-					</Item>
-					<Item last>
-						<Input placeholder="Password" />
-					</Item> */}
 					<Button
 						style={styles.btn}
 						onPress={() => {
@@ -59,21 +76,6 @@ class Main extends Component {
 						<Text style={styles.btnText}>ادخال</Text>
 					</Button>
 				</Form>
-				<AwesomeAlert
-					show={showErrorAlert}
-					showProgress={false}
-					title="تنبيه"
-					message={errMsg}
-					closeOnTouchOutside={true}
-					closeOnHardwareBackPress={false}
-					showCancelButton={true}
-					showConfirmButton={false}
-					cancelText="إخفاء"
-					cancelButtonColor="red"
-					onCancelPressed={() => {
-						onHideErrorMessage();
-					}}
-				/>
 			</View>
 		);
 	}
@@ -106,21 +108,26 @@ const styles = StyleSheet.create({
 		color: "#444444",
 		textAlign: "center",
 		width: "100%"
+	},
+	modal: {
+		height: scale(100),
+		width: scale(200),
+		backgroundColor: "white",
+		alignSelf: "center",
+		justifyContent: "center",
+		alignItems: "center"
 	}
 });
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSetRestCredentials: restId => {
-			dispatch({ type: "SET_REST_CREDNTIALS", restId });
-		},
-		onFetchResturants: () => dispatch(fetchResturants()),
+		onFetchResturants: id => dispatch(fetchResturants(id)),
 		onHideErrorMessage: () => dispatch({ type: "HIDE_ERROR_ALERT" })
 	};
 };
 
 const mapStateToProps = state => {
-	return ({ restId, showErrorAlert, errMsg, resturantData } = state);
+	return ({ restId, showErrorAlert, errMsg, resturantData, loading } = state);
 };
 
 export default connect(
