@@ -16,7 +16,6 @@ import {
 } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import AwesomeAlert from "react-native-awesome-alerts";
 import CachedImage from "react-native-image-cache-wrapper";
 import GridView from "react-native-super-grid";
 import { scale, moderateScale } from "react-native-size-matters";
@@ -124,26 +123,42 @@ class Products extends Component {
 						renderItem={item => (
 							<Card transparent key={item.id} style={{ height: "100%" }}>
 								<CardItem style={styles.cardItemContainer}>
-									<CachedImage
-										source={{ uri: item.images[0].src }}
-										style={styles.productImg}
-										activityIndicator={
-											<ActivityIndicator size="small" color={color} />
-										}
-									/>
+									{item.images[0].src ? (
+										<CachedImage
+											source={{ uri: item.images[0].src }}
+											style={styles.productImg}
+											activityIndicator={
+												<ActivityIndicator size="small" color={color} />
+											}
+										/>
+									) : null}
 								</CardItem>
 								<CardItem>
 									<Text style={styles.productName}>
 										{item.short_description.replace(regex, "")}
 									</Text>
 								</CardItem>
-								{item.dimensions.height ? (
-									<CardItem style={styles.caloriesCardItem}>
-										<Text style={styles.caloriesText}>
-											Calories: {item.dimensions.height}
-										</Text>
-									</CardItem>
-								) : null}
+								<CardItem style={styles.caloriesCardItem}>
+									<Text style={styles.caloriesText}>
+										Calories:{" "}
+										{item.meta_data.map(m => {
+											if (m.key === "wccaf_cal") {
+												return m.value;
+											}
+										})}
+									</Text>
+									<Text style={styles.caloriesText}>
+										{item.meta_data.map(m => {
+											if (m.key === "wccaf_per") {
+												if (m.value === "1") {
+													return " / Piece";
+												} else if (m.value === "2") {
+													return " / 100 gram";
+												}
+											}
+										})}
+									</Text>
+								</CardItem>
 								<CardItem>
 									<Left>
 										<Text
@@ -194,16 +209,7 @@ class Products extends Component {
 	};
 
 	render() {
-		const {
-			navigation,
-			showErrorAlert,
-			errMsg,
-			currentCategoryName,
-			onHideErrorMessage,
-			resturantData: {
-				acf: { color }
-			}
-		} = this.props;
+		const { navigation, currentCategoryName } = this.props;
 		return (
 			<View
 				style={{
@@ -221,21 +227,6 @@ class Products extends Component {
 					navigation={navigation}
 					showCategoriesList={this.state.showCategoriesList}
 					onSelectCategoryFromList={this.onSelectCategoryFromList}
-				/>
-				<AwesomeAlert
-					show={showErrorAlert}
-					showProgress={false}
-					title="تنبيه"
-					message={errMsg}
-					closeOnTouchOutside={true}
-					closeOnHardwareBackPress={false}
-					showCancelButton={true}
-					showConfirmButton={false}
-					cancelText="إخفاء"
-					cancelButtonColor="red"
-					onCancelPressed={() => {
-						onHideErrorMessage();
-					}}
 				/>
 			</View>
 		);
