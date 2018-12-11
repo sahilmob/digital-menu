@@ -1,4 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+subprojects {
+    if (project.name.contains('react-native-image-picker') || 
+        project.name.contains('react-native-vector-icons')) {
+        buildscript {
+            repositories {
+                jcenter()
+                maven { url "https://dl.bintray.com/android/android-tools/"  }
+            }
+        }
+    }
+}
 
 buildscript {
     ext {
