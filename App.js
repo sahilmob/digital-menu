@@ -46,6 +46,10 @@ class App extends Component {
 		});
 	}
 
+	componentWillMount() {
+		this.props.onClearError();
+	}
+
 	componentDidMount() {
 		this.layoutHandler();
 		loc(this);
@@ -82,7 +86,8 @@ const mapDispatchToProps = dispatch => {
 				deviceWidth: width,
 				deviceHeight: height,
 				orientation
-			})
+			}),
+		onClearError: () => dispatch({ type: "HIDE_ERROR_ALERT" })
 	};
 };
 
