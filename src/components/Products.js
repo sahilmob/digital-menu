@@ -143,10 +143,9 @@ class Products extends Component {
 										})}
 									</Text>
 									<Text style={styles.caloriesText}>
-										السعرات الحرارية:{" "}
 										{item.meta_data.map(m => {
 											if (m.key === "wccaf_cal") {
-												return m.value;
+												return m.value && `السعرات الحرارية: ${m.value}`;
 											}
 										})}
 									</Text>

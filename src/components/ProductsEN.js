@@ -140,10 +140,9 @@ class Products extends Component {
 								</CardItem>
 								<CardItem style={styles.caloriesCardItem}>
 									<Text style={styles.caloriesText}>
-										Calories:{" "}
 										{item.meta_data.map(m => {
 											if (m.key === "wccaf_cal") {
-												return m.value;
+												return m.value && `Calories: ${m.value}`;
 											}
 										})}
 									</Text>
