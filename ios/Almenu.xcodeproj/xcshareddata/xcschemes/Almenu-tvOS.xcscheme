@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "Lomela-tvOS.app"
-               BlueprintName = "Lomela-tvOS"
-               ReferencedContainer = "container:Lomela.xcodeproj">
+               BuildableName = "Almenu-tvOS.app"
+               BlueprintName = "Almenu-tvOS"
+               ReferencedContainer = "container:Almenu.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "Lomela-tvOSTests.xctest"
-               BlueprintName = "Lomela-tvOSTests"
-               ReferencedContainer = "container:Lomela.xcodeproj">
+               BuildableName = "Almenu-tvOSTests.xctest"
+               BlueprintName = "Almenu-tvOSTests"
+               ReferencedContainer = "container:Almenu.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "Lomela-tvOSTests.xctest"
-               BlueprintName = "Lomela-tvOSTests"
-               ReferencedContainer = "container:Lomela.xcodeproj">
+               BuildableName = "Almenu-tvOSTests.xctest"
+               BlueprintName = "Almenu-tvOSTests"
+               ReferencedContainer = "container:Almenu.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Lomela-tvOS.app"
-            BlueprintName = "Lomela-tvOS"
-            ReferencedContainer = "container:Lomela.xcodeproj">
+            BuildableName = "Almenu-tvOS.app"
+            BlueprintName = "Almenu-tvOS"
+            ReferencedContainer = "container:Almenu.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Lomela-tvOS.app"
-            BlueprintName = "Lomela-tvOS"
-            ReferencedContainer = "container:Lomela.xcodeproj">
+            BuildableName = "Almenu-tvOS.app"
+            BlueprintName = "Almenu-tvOS"
+            ReferencedContainer = "container:Almenu.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Lomela-tvOS.app"
-            BlueprintName = "Lomela-tvOS"
-            ReferencedContainer = "container:Lomela.xcodeproj">
+            BuildableName = "Almenu-tvOS.app"
+            BlueprintName = "Almenu-tvOS"
+            ReferencedContainer = "container:Almenu.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

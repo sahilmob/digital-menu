@@ -1,6 +1,5 @@
-package com.lomela;
-import android.os.Bundle;
-import org.devio.rn.splashscreen.SplashScreen;
+package com.almenu;
+
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -11,7 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        SplashScreen.show(this);  // here
-        return "Lomela";
+        return "Almenu";
     }
 }
