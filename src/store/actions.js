@@ -6,7 +6,7 @@ export const setResturantData = (resturantData, restId) => {
 		restId
 	};
 };
-export const saveProduncts = products => {
+export const saveProducts = products => {
 	return {
 		type: "STORE_PRODUCTS",
 		products
@@ -16,6 +16,11 @@ export const saveCategories = categories => {
 	return {
 		type: "STORE_CATEGORIES",
 		categories
+	};
+};
+export const clearCategories = () => {
+	return {
+		type: "CLEAR_CATEGORIES"
 	};
 };
 
@@ -113,7 +118,7 @@ export const fetchProducts = (url, id, pass) => {
 					}
 				})
 					.then(({ data }) => {
-						dispatch(saveProduncts(data));
+						dispatch(saveProducts(data));
 					})
 					.catch(err => {
 						dispatch(setLoadingFalse());
@@ -163,6 +168,7 @@ export const refreshCategories = () => {
 			timeout: 60000
 		})
 			.then(res => {
+				dispatch(clearCategories());
 				dispatch(saveCategories(res.data));
 				dispatch(setRefreshingFalse());
 				dispatch(clearProducts());

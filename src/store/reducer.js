@@ -68,6 +68,11 @@ export default (state = initialState, action) => {
 				...state,
 				categories: action.categories
 			};
+		case "CLEAR_CATEGORIES":
+			return {
+				...state,
+				categories: []
+			};
 		case "ADD_TO_CART":
 			let itemId = action.payload.id;
 			let itemIndex = state.cart.findIndex(el => el.id === itemId);
