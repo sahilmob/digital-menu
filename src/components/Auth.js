@@ -16,14 +16,9 @@ class Main extends Component {
 	};
 
 	handleChange = id => {
-		this.setState(
-			{
-				restId: id
-			},
-			() => {
-				console.log(this.state.restId);
-			}
-		);
+		this.setState({
+			restId: id
+		});
 	};
 
 	componentDidUpdate(prevProps) {
