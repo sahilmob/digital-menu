@@ -154,25 +154,27 @@ export const getCategories = (url, id, pass) => {
 
 export const refreshCategories = () => {
 	return (dispatch, getState) => {
-		const { url, id, pass } = getState().resturantData.acf;
+		const { url, Id, pass } = getState().resturantData.acf;
 		dispatch(setRefreshingTrue());
+		dispatch(clearCategories());
+		dispatch(clearProducts());
 		axios({
 			method: "get",
 			baseURL: `${url}wp-json/wc/v2`,
 			url: "/products/categories",
 			params: { per_page: 100 },
 			auth: {
-				username: id,
+				username: Id,
 				password: pass
 			},
 			timeout: 60000
 		})
-			.then(res => {
-				dispatch(clearCategories());
-				dispatch(saveCategories(res.data));
+			.then(({ data }) => {
+				dispatch(saveCategories(data));
+				return dispatch(fetchProducts(url, Id, pass));
+			})
+			.then(() => {
 				dispatch(setRefreshingFalse());
-				dispatch(clearProducts());
-				dispatch(fetchProducts());
 			})
 			.catch(err => {
 				dispatch(setRefreshingFalse());
