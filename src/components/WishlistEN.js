@@ -69,7 +69,7 @@ class Products extends Component {
 			totalPrice,
 			onEmptyCart,
 			resturantData: {
-				acf: { color }
+				acf: { color, service }
 			}
 		} = this.props;
 		const regex = /(<([^>]+)>)/gi;
@@ -203,6 +203,22 @@ class Products extends Component {
 				<ScrollView style={{ display: showCategoriesList ? "none" : "flex" }}>
 					{cartArr}
 					<Card>
+						{+service > 0 ? (
+							<CardItem style={styles.totalPriceContainer}>
+								<Right>
+									<Text
+										style={{
+											fontWeight: "bold",
+											fontSize:
+												orientation === "portrate" ? scale(12) : scale(14),
+											color
+										}}
+									>
+										Service : {+service} S.R
+									</Text>
+								</Right>
+							</CardItem>
+						) : null}
 						<CardItem style={styles.totalPriceContainer}>
 							<Right>
 								<Text
@@ -213,7 +229,11 @@ class Products extends Component {
 										color
 									}}
 								>
-									Total Price {totalPrice} S.R
+									Total Price{" "}
+									{+service > 0
+										? totalPrice + +service * totalPrice
+										: totalPrice}{" "}
+									S.R
 								</Text>
 							</Right>
 						</CardItem>

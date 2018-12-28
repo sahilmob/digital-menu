@@ -70,7 +70,7 @@ class Products extends Component {
 			totalPrice,
 			onEmptyCart,
 			resturantData: {
-				acf: { color }
+				acf: { color, service }
 			}
 		} = this.props;
 		const { showCategoriesList } = this.state;
@@ -201,6 +201,22 @@ class Products extends Component {
 				<ScrollView style={{ display: showCategoriesList ? "none" : "flex" }}>
 					{cartArr}
 					<Card>
+						{+service > 0 ? (
+							<CardItem>
+								<Left>
+									<Text
+										style={{
+											fontWeight: "bold",
+											fontSize:
+												orientation === "portrate" ? scale(12) : scale(14),
+											color
+										}}
+									>
+										خدمة : {+service} ر.س
+									</Text>
+								</Left>
+							</CardItem>
+						) : null}
 						<CardItem>
 							<Left>
 								<Text
@@ -211,7 +227,11 @@ class Products extends Component {
 										color
 									}}
 								>
-									السعر الاجمالي: {totalPrice} ر.س
+									السعر الاجمالي:{" "}
+									{+service > 0
+										? totalPrice + +service * totalPrice
+										: totalPrice}{" "}
+									ر.س
 								</Text>
 							</Left>
 						</CardItem>
