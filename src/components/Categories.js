@@ -1,27 +1,27 @@
-import React, { Component } from "react";
 import {
-	View,
-	Text,
 	ActivityIndicator,
 	Dimensions,
+	StyleSheet,
+	Text,
 	TouchableOpacity,
-	StyleSheet
+	View
 } from "react-native";
-import { Card, Body, CardItem } from "native-base";
+import { Body, Card, CardItem } from "native-base";
+import React, { Component } from "react";
+import { checkStore, refreshCategories } from "../store/actions";
 import {
-	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 	listenOrientationChange as loc,
-	removeOrientationListener as rol
+	removeOrientationListener as rol,
+	widthPercentageToDP as wp
 } from "react-native-responsive-screen";
-import { connect } from "react-redux";
-import { checkStore, refreshCategories } from "../store/actions";
+import { moderateScale, scale } from "react-native-size-matters";
+
 import CachedImage from "react-native-image-cache-wrapper";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import GridView from "react-native-super-grid";
-import { scale, moderateScale } from "react-native-size-matters";
-
 import Header from "./Shared/Header";
+import { connect } from "react-redux";
 
 class Categories extends Component {
 	static navigationOptions = {

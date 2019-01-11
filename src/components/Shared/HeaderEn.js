@@ -1,10 +1,11 @@
+import { Body, Button, Header, Left, Right, Title } from "native-base";
+
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Header, Left, Body, Title, Right, Button } from "native-base";
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { connect } from "react-redux";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { scale } from "react-native-size-matters";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 const AppHeader = props => {
 	const {
@@ -51,7 +52,17 @@ const AppHeader = props => {
 				</Title>
 			</Body>
 			<Right style={styles.headerRight}>
-				{key === "Categories" ? (
+				<FontAwesome
+					theme={{ iconFamily: "FontAwesome" }}
+					name="th-large"
+					style={{
+						color: "transparent",
+						fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
+						paddingHorizontal: wp("1%"),
+						paddingVertical: wp("1%")
+					}}
+				/>
+				{/* {key === "Categories" ? (
 					<FontAwesome
 						theme={{ iconFamily: "FontAwesome" }}
 						name="th-large"
@@ -83,7 +94,7 @@ const AppHeader = props => {
 							}}
 						/>
 					</Button>
-				)}
+				)} */}
 			</Right>
 		</Header>
 	);

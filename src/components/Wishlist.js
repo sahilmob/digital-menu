@@ -1,25 +1,26 @@
+import {
+	ActivityIndicator,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity
+} from "react-native";
+import { Button, Card, CardItem, Left, Right, View } from "native-base";
 import React, { Component } from "react";
 import {
-	Text,
-	ScrollView,
-	ActivityIndicator,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native";
-import { Left, Card, CardItem, Right, Button, View } from "native-base";
-import { connect } from "react-redux";
-import {
-	widthPercentageToDP as wp,
 	listenOrientationChange as loc,
-	removeOrientationListener as rol
+	removeOrientationListener as rol,
+	widthPercentageToDP as wp
 } from "react-native-responsive-screen";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import CachedImage from "react-native-image-cache-wrapper";
-import { scale } from "react-native-size-matters";
-import roundTo from "round-to";
 
+import CachedImage from "react-native-image-cache-wrapper";
+import CategoriesScrollView from "./Shared/CategoriesScrollView";
 import CatergoriesList from "./Shared/CategoriesList";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Header from "./Shared/Header";
+import { connect } from "react-redux";
+import roundTo from "round-to";
+import { scale } from "react-native-size-matters";
 
 class Products extends Component {
 	static navigationOptions = {
@@ -276,10 +277,14 @@ class Products extends Component {
 					title="المفضلة"
 				/>
 				{this.renderContent()}
-				<CatergoriesList
+				{/* <CatergoriesList
 					navigation={navigation}
 					showCategoriesList={this.state.showCategoriesList}
 					onSelectCategoryFromList={this.onSelectCategoryFromList}
+				/> */}
+				<CategoriesScrollView
+					onSelectCategoryFromList={this.onSelectCategoryFromList}
+					navigation={navigation}
 				/>
 			</View>
 		);

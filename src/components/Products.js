@@ -1,29 +1,30 @@
-import React, { Component } from "react";
 import {
-	View,
-	Text,
 	ActivityIndicator,
 	ScrollView,
+	StyleSheet,
+	Text,
 	TouchableOpacity,
-	StyleSheet
+	View
 } from "react-native";
-import { Left, Card, CardItem, Right, Button } from "native-base";
+import { Button, Card, CardItem, Left, Right } from "native-base";
+import React, { Component } from "react";
 import {
-	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 	listenOrientationChange as loc,
-	removeOrientationListener as rol
+	removeOrientationListener as rol,
+	widthPercentageToDP as wp
 } from "react-native-responsive-screen";
-import { connect } from "react-redux";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import CachedImage from "react-native-image-cache-wrapper";
-import GridView from "react-native-super-grid";
-import { scale, moderateScale } from "react-native-size-matters";
-import roundTo from "round-to";
+import { moderateScale, scale } from "react-native-size-matters";
 
+import CachedImage from "react-native-image-cache-wrapper";
+import CategoriesScrollView from "./Shared/CategoriesScrollView";
 import CatergoriesList from "./Shared/CategoriesList";
-import Pagenation from "./Shared/Pagenation";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import GridView from "react-native-super-grid";
 import Header from "./Shared/Header";
+import Pagenation from "./Shared/Pagenation";
+import { connect } from "react-redux";
+import roundTo from "round-to";
 
 class Products extends Component {
 	state = {
@@ -41,7 +42,7 @@ class Products extends Component {
 	}
 
 	scrollToTop = () => {
-		this.scroller.scrollTo({ x: 0, y: 0 });
+		this.scroller && this.scroller.scrollTo({ x: 0, y: 0 });
 	};
 
 	navigateToProducts = (navigate, id, name) => {
@@ -54,6 +55,7 @@ class Products extends Component {
 			currentPage: 1,
 			pageLowerLimit: 0
 		});
+		this.scrollToTop();
 	};
 
 	toggleCategoriesList = () => {
@@ -226,10 +228,14 @@ class Products extends Component {
 					title={currentCategoryName}
 				/>
 				{this.renderContent()}
-				<CatergoriesList
+				{/* <CatergoriesList
 					navigation={navigation}
 					showCategoriesList={this.state.showCategoriesList}
 					onSelectCategoryFromList={this.onSelectCategoryFromList}
+				/> */}
+				<CategoriesScrollView
+					onSelectCategoryFromList={this.onSelectCategoryFromList}
+					navigation={navigation}
 				/>
 			</View>
 		);
@@ -286,7 +292,7 @@ const styles = StyleSheet.create({
 	},
 	noteText: {
 		paddingHorizontal: scale(10),
-		paddingBottom: scale(10),
+		paddingBottom: scale(45),
 		textAlign: "center"
 	}
 });

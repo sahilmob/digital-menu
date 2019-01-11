@@ -1,17 +1,18 @@
-import React, { Component } from "react";
 import {
-	View,
-	Text,
 	ActivityIndicator,
 	ScrollView,
+	StyleSheet,
+	Text,
 	TouchableOpacity,
-	StyleSheet
+	View
 } from "react-native";
-import { Header, Left, Body, Title, Right, Button } from "native-base";
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { connect } from "react-redux";
+import { Body, Button, Header, Left, Right, Title } from "native-base";
+import React, { Component } from "react";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import { connect } from "react-redux";
 import { scale } from "react-native-size-matters";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 AppHeader = props => {
 	const {
@@ -37,7 +38,17 @@ AppHeader = props => {
 			androidStatusBarColor={color}
 		>
 			<Left style={styles.headerLeft}>
-				{key === "Categories" ? (
+				<FontAwesome
+					theme={{ iconFamily: "FontAwesome" }}
+					name="th-large"
+					style={{
+						color: "transparent",
+						fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
+						paddingHorizontal: wp("1%"),
+						paddingVertical: wp("1%")
+					}}
+				/>
+				{/* {key === "Categories" ? (
 					<FontAwesome
 						theme={{ iconFamily: "FontAwesome" }}
 						name="th-large"
@@ -69,7 +80,7 @@ AppHeader = props => {
 							}}
 						/>
 					</Button>
-				)}
+				)} */}
 			</Left>
 			<Body style={styles.headerBody}>
 				<Title
