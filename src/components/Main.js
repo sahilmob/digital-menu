@@ -1,22 +1,21 @@
-import React from "react";
 import {
-	View,
+	Dimensions,
+	Image,
 	SafeAreaView,
 	ScrollView,
-	Image,
-	Dimensions,
+	Text,
 	TouchableOpacity,
-	Text
+	View
 } from "react-native";
-import { createDrawerNavigator, DrawerItems } from "react-navigation";
-import { verticalScale, scale } from "react-native-size-matters";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import { connect } from "react-redux";
-import RNRestart from "react-native-restart";
+import { DrawerItems, createDrawerNavigator } from "react-navigation";
+import { scale, verticalScale } from "react-native-size-matters";
 
 import Categories from "./Categories";
-import Wishlist from "./Wishlist";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Products from "./Products";
+import React from "react";
+import Wishlist from "./Wishlist";
+import { connect } from "react-redux";
 
 Main = props => {
 	const {
@@ -48,7 +47,7 @@ Main = props => {
 						/>
 					</View>
 					<DrawerItems {...drawerProps} />
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						style={{ justifyContent: "flex-end", flexDirection: "row" }}
 						onPress={() => {
 							props.onSetLanguage();
@@ -66,7 +65,7 @@ Main = props => {
 								marginLeft: scale(10)
 							}}
 						/>
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</ScrollView>
 			</SafeAreaView>
 		);

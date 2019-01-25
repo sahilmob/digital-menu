@@ -1,22 +1,22 @@
-import React from "react";
 import {
-	View,
+	Dimensions,
+	Image,
 	SafeAreaView,
 	ScrollView,
-	Image,
-	Dimensions,
+	Text,
 	TouchableOpacity,
-	Text
+	View
 } from "react-native";
-import { createDrawerNavigator, DrawerItems } from "react-navigation";
-import { verticalScale, scale } from "react-native-size-matters";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import { connect } from "react-redux";
-import RNRestart from "react-native-restart";
+import { DrawerItems, createDrawerNavigator } from "react-navigation";
+import { scale, verticalScale } from "react-native-size-matters";
 
 import Categories from "./CategoriesEN";
-import Wishlist from "./WishlistEN";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Products from "./ProductsEN";
+import RNRestart from "react-native-restart";
+import React from "react";
+import Wishlist from "./WishlistEN";
+import { connect } from "react-redux";
 
 Main = props => {
 	const {
@@ -48,7 +48,7 @@ Main = props => {
 						/>
 					</View>
 					<DrawerItems {...drawerProps} />
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						style={{ flexDirection: "row" }}
 						onPress={() => {
 							onSetLanguage();
@@ -66,7 +66,7 @@ Main = props => {
 							}}
 						/>
 						<Text>تغيير اللغة الى العربية</Text>
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</ScrollView>
 			</SafeAreaView>
 		);

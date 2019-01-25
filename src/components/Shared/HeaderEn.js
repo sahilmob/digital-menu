@@ -1,6 +1,7 @@
 import { Body, Button, Header, Left, Right, Title } from "native-base";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import RNRestart from "react-native-restart";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -52,16 +53,25 @@ const AppHeader = props => {
 				</Title>
 			</Body>
 			<Right style={styles.headerRight}>
-				<FontAwesome
-					theme={{ iconFamily: "FontAwesome" }}
-					name="th-large"
-					style={{
-						color: "transparent",
-						fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
-						paddingHorizontal: wp("1%"),
-						paddingVertical: wp("1%")
+				<Button
+					style={styles.menuBtn}
+					onPress={() => {
+						props.onSetLanguage();
+						setTimeout(RNRestart.Restart, 1);
 					}}
-				/>
+				>
+					<FontAwesome
+						theme={{ iconFamily: "FontAwesome" }}
+						name="language"
+						style={{
+							color: "#E6E2D5",
+							fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
+							paddingHorizontal: wp("1%"),
+							paddingVertical: wp("1%")
+						}}
+					/>
+				</Button>
+
 				{/* {key === "Categories" ? (
 					<FontAwesome
 						theme={{ iconFamily: "FontAwesome" }}
@@ -133,5 +143,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
 	return ({ currentCategoryName, orientation, resturantData } = state);
 };
+const mapDispatchToProps = dispatch => {
+	return {
+		onSetLanguage: () => {
+			dispatch({ type: "SET_LANGUAGE", lang: "ar" });
+		}
+	};
+};
 
-export default connect(mapStateToProps)(AppHeader);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AppHeader);

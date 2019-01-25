@@ -10,6 +10,7 @@ import { Body, Button, Header, Left, Right, Title } from "native-base";
 import React, { Component } from "react";
 
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import RNRestart from "react-native-restart";
 import { connect } from "react-redux";
 import { scale } from "react-native-size-matters";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
@@ -38,16 +39,44 @@ AppHeader = props => {
 			androidStatusBarColor={color}
 		>
 			<Left style={styles.headerLeft}>
-				<FontAwesome
-					theme={{ iconFamily: "FontAwesome" }}
-					name="th-large"
-					style={{
-						color: "transparent",
-						fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
-						paddingHorizontal: wp("1%"),
-						paddingVertical: wp("1%")
+				{/* <TouchableOpacity
+						style={{ justifyContent: "flex-end", flexDirection: "row" }}
+						onPress={() => {
+							props.onSetLanguage();
+							setTimeout(RNRestart.Restart, 1);
+						}}
+					>
+						<Text>Switch Language to English</Text>
+						<FontAwesome
+							theme={{ iconFamily: "FontAwesome" }}
+							name="language"
+							style={{
+								color: drawerProps.activeTintColor,
+								fontSize: scale(16),
+								marginRight: scale(30),
+								marginLeft: scale(10)
+							}}
+						/>
+					</TouchableOpacity> */}
+				<Button
+					style={styles.menuBtn}
+					onPress={() => {
+						props.onSetLanguage();
+						setTimeout(RNRestart.Restart, 1);
 					}}
-				/>
+				>
+					<FontAwesome
+						theme={{ iconFamily: "FontAwesome" }}
+						name="language"
+						style={{
+							color: "#E6E2D5",
+							fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),
+							paddingHorizontal: wp("1%"),
+							paddingVertical: wp("1%")
+						}}
+					/>
+				</Button>
+
 				{/* {key === "Categories" ? (
 					<FontAwesome
 						theme={{ iconFamily: "FontAwesome" }}
@@ -146,4 +175,15 @@ const mapStateToProps = state => {
 	return ({ currentCategoryName, orientation, resturantData } = state);
 };
 
-export default connect(mapStateToProps)(AppHeader);
+const mapDispatchToProps = dispatch => {
+	return {
+		onSetLanguage: () => {
+			dispatch({ type: "SET_LANGUAGE", lang: "en" });
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AppHeader);
