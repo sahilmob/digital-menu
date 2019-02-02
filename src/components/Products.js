@@ -74,7 +74,7 @@ class Products extends Component {
 			onAddToCart,
 			loading,
 			resturantData: {
-				acf: { color, Arabic_note, Tax_Note_arabic }
+				acf: { color, Arabic_note, Tax_Note_arabic, currency, tax }
 			}
 		} = this.props;
 		const { pageLowerLimit, showCategoriesList, currentPage } = this.state;
@@ -173,7 +173,8 @@ class Products extends Component {
 												color
 											}}
 										>
-											{roundTo.down(item.price * 1.05, 2)} ر.س
+											{+roundTo.down(item.price * +tax, 2) + +item.price}{" "}
+											{currency}
 										</Text>
 									</Right>
 								</CardItem>

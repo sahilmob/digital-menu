@@ -81,7 +81,7 @@ class Products extends Component {
 			onAddToCart,
 			loading,
 			resturantData: {
-				acf: { color, Tax_Note_Eng, Note_Eng }
+				acf: { color, Tax_Note_Eng, Note_Eng, currency_eng, tax }
 			}
 		} = this.props;
 		const regex = /(<([^>]+)>)/gi;
@@ -169,7 +169,8 @@ class Products extends Component {
 												color: color
 											}}
 										>
-											{roundTo.down(item.price * 1.05, 2)} S.R
+											{+roundTo.down(item.price * +tax, 2) + +item.price}{" "}
+											{currency_eng}
 										</Text>
 									</Left>
 									<Right>

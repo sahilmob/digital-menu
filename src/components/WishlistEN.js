@@ -70,7 +70,7 @@ class Products extends Component {
 			totalPrice,
 			onEmptyCart,
 			resturantData: {
-				acf: { color, service }
+				acf: { color, service, tax, currency_eng }
 			}
 		} = this.props;
 		const regex = /(<([^>]+)>)/gi;
@@ -97,7 +97,9 @@ class Products extends Component {
 										color
 									}}
 								>
-									{el.itemObj.price} S.R
+									{+roundTo.down(el.itemObj.price * +tax, 2) +
+										+el.itemObj.price}{" "}
+									{currency_eng}
 								</Text>
 							</Left>
 							<Right>
@@ -185,7 +187,14 @@ class Products extends Component {
 										fontSize: orientation === "portrate" ? scale(12) : scale(14)
 									}}
 								>
-									{roundTo.down(el.count * (el.itemObj.price * 1.05), 2)}
+									{/* {+roundTo.down(el.itemObj.price * +tax, 2) +
+										+el.itemObj.price}{" "}
+									{currency_eng}
+									{roundTo.down(el.count * (el.itemObj.price * 1.05), 2)} */}
+									{roundTo.down(
+										el.count * (el.itemObj.price * +tax + +el.itemObj.price),
+										2
+									)}
 								</Text>
 								<Text
 									style={{
@@ -193,7 +202,7 @@ class Products extends Component {
 									}}
 								>
 									{" "}
-									S.R
+									{currency_eng}
 								</Text>
 							</Left>
 						</CardItem>
@@ -215,7 +224,7 @@ class Products extends Component {
 											color
 										}}
 									>
-										Service : {+service} S.R
+										Service : {+service} {currency_eng}
 									</Text>
 								</Right>
 							</CardItem>
@@ -232,9 +241,9 @@ class Products extends Component {
 								>
 									Total Price{" "}
 									{+service > 0
-										? totalPrice + +service * totalPrice
+										? roundTo.down(+totalPrice + +service * +totalPrice, 2)
 										: totalPrice}{" "}
-									S.R
+									{currency_eng}
 								</Text>
 							</Right>
 						</CardItem>

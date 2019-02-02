@@ -71,7 +71,7 @@ class Products extends Component {
 			totalPrice,
 			onEmptyCart,
 			resturantData: {
-				acf: { color, service }
+				acf: { color, service, currency, tax }
 			}
 		} = this.props;
 		const { showCategoriesList } = this.state;
@@ -110,7 +110,9 @@ class Products extends Component {
 										color
 									}}
 								>
-									{el.itemObj.price} ر.س
+									{+roundTo.down(el.itemObj.price * +tax, 2) +
+										+el.itemObj.price}{" "}
+									{currency}
 								</Text>
 							</Right>
 						</CardItem>
@@ -126,14 +128,17 @@ class Products extends Component {
 									}}
 								>
 									{" "}
-									ر.س
 								</Text>
 								<Text
 									style={{
 										fontSize: orientation === "portrate" ? scale(12) : scale(14)
 									}}
 								>
-									{roundTo.down(el.count * (el.itemObj.price * 1.05), 2)}
+									{roundTo.down(
+										el.count * (el.itemObj.price * +tax + +el.itemObj.price),
+										2
+									)}{" "}
+									{currency}
 								</Text>
 								<Text
 									style={{
@@ -213,7 +218,7 @@ class Products extends Component {
 											color
 										}}
 									>
-										خدمة : {+service} ر.س
+										خدمة : {+service} {currency}
 									</Text>
 								</Left>
 							</CardItem>
@@ -230,9 +235,9 @@ class Products extends Component {
 								>
 									السعر الاجمالي:{" "}
 									{+service > 0
-										? totalPrice + +service * totalPrice
+										? roundTo.down(+totalPrice + +service * +totalPrice, 2)
 										: totalPrice}{" "}
-									ر.س
+									{currency}
 								</Text>
 							</Left>
 						</CardItem>
