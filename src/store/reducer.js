@@ -1,4 +1,7 @@
 import { toaster, toasterEn } from "./toast";
+
+import update from "immutability-helper";
+
 const initialState = {
 	products: [],
 	categories: [],
@@ -21,7 +24,6 @@ const initialState = {
 	password: null,
 	resturantData: null
 };
-import update from "immutability-helper";
 
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -90,7 +92,10 @@ export default (state = initialState, action) => {
 				newCartArr.forEach(el => {
 					updatedPrice =
 						updatedPrice +
-						parseFloat(el.itemObj.price * 1.05).toFixed(2) * parseInt(el.count);
+						parseFloat(
+							el.itemObj.price * (1 + +state.resturantData.acf.tax)
+						).toFixed(2) *
+							parseInt(el.count);
 				});
 				if (state.selectedLanguage === "ar") {
 					toaster.showToast("تم إضافة المنتح الى المفضلة");
@@ -119,7 +124,10 @@ export default (state = initialState, action) => {
 				newCartArr.forEach(el => {
 					updatedPrice =
 						updatedPrice +
-						parseFloat(el.itemObj.price * 1.05).toFixed(2) * parseInt(el.count);
+						parseFloat(
+							el.itemObj.price * (1 + +state.resturantData.acf.tax)
+						).toFixed(2) *
+							parseInt(el.count);
 				});
 				return {
 					...state,
@@ -152,7 +160,10 @@ export default (state = initialState, action) => {
 					newCartArr.forEach(el => {
 						updatedPriceRemoved =
 							updatedPriceRemoved +
-							parseFloat(el.itemObj.price).toFixed(2) * parseInt(el.count);
+							parseFloat(
+								el.itemObj.price * (1 + +state.resturantData.acf.tax)
+							).toFixed(2) *
+								parseInt(el.count);
 					});
 					return {
 						...state,
@@ -164,7 +175,10 @@ export default (state = initialState, action) => {
 					newArr.forEach(el => {
 						updatedPriceRemoved =
 							updatedPriceRemoved +
-							parseFloat(el.itemObj.price).toFixed(2) * parseInt(el.count);
+							parseFloat(
+								el.itemObj.price * (1 + +state.resturantData.acf.tax)
+							).toFixed(2) *
+								parseInt(el.count);
 					});
 					return {
 						...state,

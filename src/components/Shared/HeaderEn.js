@@ -62,7 +62,7 @@ const AppHeader = props => {
 				>
 					<FontAwesome
 						theme={{ iconFamily: "FontAwesome" }}
-						name="language"
+						name="globe-americas"
 						style={{
 							color: "#E6E2D5",
 							fontSize: orientation === "portrate" ? wp("3.5%") : wp("2.5%"),

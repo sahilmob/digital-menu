@@ -224,7 +224,8 @@ class Products extends Component {
 											color
 										}}
 									>
-										Service : {+service} {currency_eng}
+										Service : {roundTo.down(+service * +totalPrice, 2)}{" "}
+										{currency_eng}
 									</Text>
 								</Right>
 							</CardItem>
@@ -241,7 +242,7 @@ class Products extends Component {
 								>
 									Total Price{" "}
 									{+service > 0
-										? roundTo.down(+totalPrice + +service * +totalPrice, 2)
+										? roundTo.down((1 + +service) * +totalPrice, 2)
 										: totalPrice}{" "}
 									{currency_eng}
 								</Text>

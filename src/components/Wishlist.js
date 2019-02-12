@@ -218,7 +218,7 @@ class Products extends Component {
 											color
 										}}
 									>
-										خدمة : {+service} {currency}
+										خدمة : {roundTo.down(+service * +totalPrice, 2)} {currency}
 									</Text>
 								</Left>
 							</CardItem>
